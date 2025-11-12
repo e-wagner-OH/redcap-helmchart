@@ -48,7 +48,7 @@
                             "name": {
                                 "type": "string"
                             },
-                            "subpath": {
+                            "subPath": {
                                 "type": "string"
                             }
                         },

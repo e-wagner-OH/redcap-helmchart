@@ -142,7 +142,7 @@ redcap:
     logAllErrors: "FALSE"
     # -- The URL on which the application is exposed (useful if the application is behind a reverse-proxy).
     # @section -- REDCap settings
-    externalURL: "http://localhost/"
+    externalURL: "localhost"
     # -- The name of the institution that is presented to the users.
     # @section -- REDCap settings
     institutionName: "REDCap Local Institution"
@@ -621,7 +621,7 @@ audit:
   # @default -- Mounted on `/var/run/secret/api-ca.pem`
   - name: "api-ca"
     mountPath: /var/run/secret/api-ca.pem
-    subpath: ""
+    subPath: ""
 
   # Configuration of the endpoint of the audit stack the logs are send to.
   logsApi:

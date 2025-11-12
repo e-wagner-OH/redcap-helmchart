@@ -276,9 +276,18 @@ Create the name of the service to use
 {{ include "redcap.fullname" . }}-svc
 {{- end }}
 
-{{/*
-Create the name of the service to use
-*/}}
+http://{{ include `httpd.serviceName` . }}:1080
 {{- define "httpd.serviceName" -}}
 {{ include "httpd.fullname" . }}-svc
+{{- end }}
+
+{{/*
+Create the url that redcap will use as redcap_base_url
+*/}}
+{{- define "redcap.redcapBaseUrl" -}}
+{{- if .Values.httpd.tls.enabled }}
+https://{{ include `httpd.serviceName` . }}:1443
+{{- else }}
+http://{{ include `httpd.serviceName` . }}:1080
+{{- end }}
 {{- end }}
