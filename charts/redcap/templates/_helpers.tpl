@@ -286,8 +286,8 @@ Create the url that redcap will use as redcap_base_url
 */}}
 {{- define "redcap.redcapBaseUrl" -}}
 {{- if .Values.httpd.tls.enabled }}
-https://{{ include `httpd.serviceName` . }}:1443
+https://{{ .Values.redcap.config.externalURL }}
 {{- else }}
-http://{{ include `httpd.serviceName` . }}:1080
+http://{{ .Values.redcap.config.externalURL }}
 {{- end }}
 {{- end }}
