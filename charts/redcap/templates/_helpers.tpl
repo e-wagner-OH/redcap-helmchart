@@ -284,10 +284,6 @@ http://{{ include `httpd.serviceName` . }}:1080
 {{/*
 Create the url that redcap will use as redcap_base_url
 */}}
-{{- define "redcap.redcapBaseUrl" -}}
-{{- if .Values.httpd.tls.enabled }}
-https://{{ .Values.redcap.config.externalURL }}
-{{- else }}
-http://{{ .Values.redcap.config.externalURL }}
-{{- end }}
+{{- define "httpd.externalDomain" -}}
+{{- printf "%s" ( .Values.redcap.config.externalURL | urlParse ).host  | splitList ":" | first }}
 {{- end }}
