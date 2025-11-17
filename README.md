@@ -3,7 +3,7 @@
 [![redcap-helmchart-ci](https://github.com/aphp/redcap-helmchart/actions/workflows/chart-ci.yaml/badge.svg)](https://github.com/aphp/redcap-helmchart/actions/workflows/chart-ci.yaml)
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/aphp-redcap)](https://artifacthub.io/packages/search?repo=aphp-redcap)
 
-## Presentation
+## Presentation 
 
 This repository hosts the REDCap Helm Chart developed by the Greater Paris University Hospitals (`APHP` in French - Assistance Publique des Hôpitaux de Paris). This Chart allows for a cloud-native and cloud-agnostic deployment of REDCap, a secure web application for building and managing online surveys and databases.
 
