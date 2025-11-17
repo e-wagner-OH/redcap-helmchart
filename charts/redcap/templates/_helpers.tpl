@@ -276,9 +276,14 @@ Create the name of the service to use
 {{ include "redcap.fullname" . }}-svc
 {{- end }}
 
-{{/*
-Create the name of the service to use
-*/}}
+http://{{ include `httpd.serviceName` . }}:1080
 {{- define "httpd.serviceName" -}}
 {{ include "httpd.fullname" . }}-svc
+{{- end }}
+
+{{/*
+Create the url that redcap will use as redcap_base_url
+*/}}
+{{- define "httpd.externalDomain" -}}
+{{- printf "%s" ( .Values.redcap.config.externalURL | urlParse ).host  | splitList ":" | first }}
 {{- end }}

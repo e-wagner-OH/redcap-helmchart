@@ -1,7 +1,9 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
     "properties": {
         "audit": {
+            "type": "object",
             "properties": {
                 "enableMultiplePipelines": {
                     "type": "boolean"
@@ -13,14 +15,18 @@
                     "type": "string"
                 },
                 "extraEnvVars": {
+                    "type": "array",
                     "items": {
+                        "type": "object",
                         "properties": {
                             "name": {
                                 "type": "string"
                             },
                             "valueFrom": {
+                                "type": "object",
                                 "properties": {
                                     "secretKeyRef": {
+                                        "type": "object",
                                         "properties": {
                                             "key": {
                                                 "type": "string"
@@ -28,19 +34,17 @@
                                             "name": {
                                                 "type": "string"
                                             }
-                                        },
-                                        "type": "object"
+                                        }
                                     }
-                                },
-                                "type": "object"
+                                }
                             }
-                        },
-                        "type": "object"
-                    },
-                    "type": "array"
+                        }
+                    }
                 },
                 "extraVolumeMounts": {
+                    "type": "array",
                     "items": {
+                        "type": "object",
                         "properties": {
                             "mountPath": {
                                 "type": "string"
@@ -48,52 +52,78 @@
                             "name": {
                                 "type": "string"
                             },
-                            "subpath": {
+                            "subPath": {
                                 "type": "string"
                             }
-                        },
-                        "type": "object"
-                    },
-                    "type": "array"
+                        }
+                    }
                 },
                 "extraVolumes": {
+                    "type": "array",
                     "items": {
+                        "type": "object",
                         "properties": {
                             "emptyDir": {
+                                "type": "object",
                                 "properties": {
                                     "sizeLimit": {
                                         "type": "string"
                                     }
-                                },
-                                "type": "object"
+                                }
                             },
                             "name": {
                                 "type": "string"
                             },
                             "secret": {
+                                "type": "object",
                                 "properties": {
                                     "secretName": {
                                         "type": "string"
                                     }
-                                },
-                                "type": "object"
+                                }
                             }
+                        }
+                    }
+                },
+                "global": {
+                    "type": "object",
+                    "properties": {
+                        "security": {
+                            "type": "object",
+                            "properties": {
+                                "allowInsecureImages": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                },
+                "image": {
+                    "type": "object",
+                    "properties": {
+                        "repository": {
+                            "type": "string"
                         },
-                        "type": "object"
-                    },
-                    "type": "array"
+                        "tag": {
+                            "type": "string"
+                        }
+                    }
                 },
                 "initContainers": {
+                    "type": "array",
                     "items": {
+                        "type": "object",
                         "properties": {
                             "command": {
+                                "type": "array",
                                 "items": {
                                     "type": "string"
-                                },
-                                "type": "array"
+                                }
                             },
                             "env": {
+                                "type": "array",
                                 "items": {
+                                    "type": "object",
                                     "properties": {
                                         "name": {
                                             "type": "string"
@@ -101,10 +131,8 @@
                                         "value": {
                                             "type": "string"
                                         }
-                                    },
-                                    "type": "object"
-                                },
-                                "type": "array"
+                                    }
+                                }
                             },
                             "image": {
                                 "type": "string"
@@ -116,6 +144,7 @@
                                 "type": "string"
                             },
                             "securityContext": {
+                                "type": "object",
                                 "properties": {
                                     "allowPrivilegeEscalation": {
                                         "type": "boolean"
@@ -129,11 +158,12 @@
                                     "runAsUser": {
                                         "type": "integer"
                                     }
-                                },
-                                "type": "object"
+                                }
                             },
                             "volumeMounts": {
+                                "type": "array",
                                 "items": {
+                                    "type": "object",
                                     "properties": {
                                         "mountPath": {
                                             "type": "string"
@@ -141,19 +171,17 @@
                                         "name": {
                                             "type": "string"
                                         }
-                                    },
-                                    "type": "object"
-                                },
-                                "type": "array"
+                                    }
+                                }
                             }
-                        },
-                        "type": "object"
-                    },
-                    "type": "array"
+                        }
+                    }
                 },
                 "logsApi": {
+                    "type": "object",
                     "properties": {
                         "config": {
+                            "type": "object",
                             "properties": {
                                 "caPath": {
                                     "type": "string"
@@ -167,19 +195,18 @@
                                 "port": {
                                     "type": "integer"
                                 }
-                            },
-                            "type": "object"
+                            }
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "persistence": {
+                    "type": "object",
                     "properties": {
                         "accessModes": {
+                            "type": "array",
                             "items": {
                                 "type": "string"
-                            },
-                            "type": "array"
+                            }
                         },
                         "enabled": {
                             "type": "boolean"
@@ -190,21 +217,20 @@
                         "storageClass": {
                             "type": "string"
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "podLabels": {
+                    "type": "object",
                     "properties": {
                         "app.kubernetes.io/role": {
                             "type": "string"
                         }
-                    },
-                    "type": "object"
+                    }
                 }
-            },
-            "type": "object"
+            }
         },
         "autoscaling": {
+            "type": "object",
             "properties": {
                 "enabled": {
                     "type": "boolean"
@@ -221,17 +247,19 @@
                 "targetMemoryUtilizationPercentage": {
                     "type": "integer"
                 }
-            },
-            "type": "object"
+            }
         },
         "backupJob": {
+            "type": "object",
             "properties": {
                 "archiveName": {
                     "type": "string"
                 },
                 "database": {
+                    "type": "object",
                     "properties": {
                         "image": {
+                            "type": "object",
                             "properties": {
                                 "pullPolicy": {
                                     "type": "string"
@@ -242,11 +270,9 @@
                                 "tag": {
                                     "type": "string"
                                 }
-                            },
-                            "type": "object"
+                            }
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "enabled": {
                     "type": "boolean"
@@ -255,8 +281,10 @@
                     "type": "array"
                 },
                 "redcap": {
+                    "type": "object",
                     "properties": {
                         "image": {
+                            "type": "object",
                             "properties": {
                                 "pullPolicy": {
                                     "type": "string"
@@ -267,22 +295,21 @@
                                 "tag": {
                                     "type": "string"
                                 }
-                            },
-                            "type": "object"
+                            }
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "resources": {
-                    "properties": {},
                     "type": "object"
                 },
                 "schedule": {
                     "type": "string"
                 },
                 "uploader": {
+                    "type": "object",
                     "properties": {
                         "image": {
+                            "type": "object",
                             "properties": {
                                 "pullPolicy": {
                                     "type": "string"
@@ -293,17 +320,19 @@
                                 "tag": {
                                     "type": "string"
                                 }
-                            },
-                            "type": "object"
+                            }
                         },
                         "s3": {
+                            "type": "object",
                             "properties": {
                                 "backupPath": {
                                     "type": "string"
                                 },
                                 "config": {
+                                    "type": "object",
                                     "properties": {
                                         "auth": {
+                                            "type": "object",
                                             "properties": {
                                                 "accessKeyID": {
                                                     "type": "string"
@@ -314,8 +343,7 @@
                                                 "secretAccessKey": {
                                                     "type": "string"
                                                 }
-                                            },
-                                            "type": "object"
+                                            }
                                         },
                                         "endpoint": {
                                             "type": "string"
@@ -326,28 +354,25 @@
                                         "region": {
                                             "type": "string"
                                         }
-                                    },
-                                    "type": "object"
+                                    }
                                 }
-                            },
-                            "type": "object"
+                            }
                         }
-                    },
-                    "type": "object"
+                    }
                 }
-            },
-            "type": "object"
+            }
         },
         "httpd": {
+            "type": "object",
             "properties": {
                 "affinity": {
-                    "properties": {},
                     "type": "object"
                 },
                 "enabled": {
                     "type": "boolean"
                 },
                 "image": {
+                    "type": "object",
                     "properties": {
                         "pullPolicy": {
                             "type": "string"
@@ -358,33 +383,34 @@
                         "tag": {
                             "type": "string"
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "nodeSelector": {
-                    "properties": {},
                     "type": "object"
                 },
                 "replicaCount": {
                     "type": "integer"
                 },
                 "resources": {
-                    "properties": {},
                     "type": "object"
                 },
                 "shibboleth": {
+                    "type": "object",
                     "properties": {
                         "enabled": {
                             "type": "boolean"
                         },
                         "idp": {
+                            "type": "object",
                             "properties": {
                                 "entityID": {
                                     "type": "string"
                                 },
                                 "metadata": {
+                                    "type": "object",
                                     "properties": {
                                         "secretKeyRef": {
+                                            "type": "object",
                                             "properties": {
                                                 "key": {
                                                     "type": "string"
@@ -392,44 +418,43 @@
                                                 "name": {
                                                     "type": "string"
                                                 }
-                                            },
-                                            "type": "object"
+                                            }
                                         }
-                                    },
-                                    "type": "object"
+                                    }
                                 }
-                            },
-                            "type": "object"
+                            }
                         },
                         "sp": {
+                            "type": "object",
                             "properties": {
                                 "entityID": {
                                     "type": "string"
                                 },
                                 "metadata": {
+                                    "type": "object",
                                     "properties": {
                                         "certificate": {
+                                            "type": "object",
                                             "properties": {
                                                 "existingSecret": {
                                                     "type": "string"
                                                 }
-                                            },
-                                            "type": "object"
+                                            }
                                         }
-                                    },
-                                    "type": "object"
+                                    }
                                 }
-                            },
-                            "type": "object"
+                            }
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "tls": {
+                    "type": "object",
                     "properties": {
                         "caChain": {
+                            "type": "object",
                             "properties": {
                                 "secretKeyRef": {
+                                    "type": "object",
                                     "properties": {
                                         "key": {
                                             "type": "string"
@@ -437,36 +462,32 @@
                                         "name": {
                                             "type": "string"
                                         }
-                                    },
-                                    "type": "object"
+                                    }
                                 }
-                            },
-                            "type": "object"
+                            }
                         },
                         "certificate": {
+                            "type": "object",
                             "properties": {
                                 "existingSecret": {
                                     "type": "string"
                                 }
-                            },
-                            "type": "object"
+                            }
                         },
                         "enabled": {
                             "type": "boolean"
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "tolerations": {
                     "type": "array"
                 }
-            },
-            "type": "object"
+            }
         },
         "ingress": {
+            "type": "object",
             "properties": {
                 "annotations": {
-                    "properties": {},
                     "type": "object"
                 },
                 "className": {
@@ -481,15 +502,16 @@
                 "tls": {
                     "type": "array"
                 }
-            },
-            "type": "object"
+            }
         },
         "mysql": {
+            "type": "object",
             "properties": {
                 "architecture": {
                     "type": "string"
                 },
                 "auth": {
+                    "type": "object",
                     "properties": {
                         "createDatabase": {
                             "type": "boolean"
@@ -503,8 +525,7 @@
                         "username": {
                             "type": "string"
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "enabled": {
                     "type": "boolean"
@@ -512,29 +533,55 @@
                 "fullnameOverride": {
                     "type": "string"
                 },
+                "global": {
+                    "type": "object",
+                    "properties": {
+                        "security": {
+                            "type": "object",
+                            "properties": {
+                                "allowInsecureImages": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                },
+                "image": {
+                    "type": "object",
+                    "properties": {
+                        "repository": {
+                            "type": "string"
+                        },
+                        "tag": {
+                            "type": "string"
+                        }
+                    }
+                },
                 "initdbScriptsConfigMap": {
                     "type": "string"
                 },
                 "networkPolicy": {
+                    "type": "object",
                     "properties": {
                         "enabled": {
                             "type": "boolean"
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "primary": {
+                    "type": "object",
                     "properties": {
                         "existingConfigmap": {
                             "type": "string"
                         },
                         "persistence": {
+                            "type": "object",
                             "properties": {
                                 "accessModes": {
+                                    "type": "array",
                                     "items": {
                                         "type": "string"
-                                    },
-                                    "type": "array"
+                                    }
                                 },
                                 "size": {
                                     "type": "string"
@@ -542,66 +589,65 @@
                                 "storageClass": {
                                     "type": "string"
                                 }
-                            },
-                            "type": "object"
+                            }
                         },
                         "podLabels": {
+                            "type": "object",
                             "properties": {
                                 "app.kubernetes.io/role": {
                                     "type": "string"
                                 }
-                            },
-                            "type": "object"
+                            }
                         },
                         "service": {
+                            "type": "object",
                             "properties": {
                                 "port": {
+                                    "type": "object",
                                     "properties": {
                                         "mysql": {
                                             "type": "integer"
                                         }
-                                    },
-                                    "type": "object"
+                                    }
                                 }
-                            },
-                            "type": "object"
+                            }
                         }
-                    },
-                    "type": "object"
+                    }
                 }
-            },
-            "type": "object"
+            }
         },
         "networkPolicies": {
+            "type": "object",
             "properties": {
                 "enabled": {
                     "type": "boolean"
                 }
-            },
-            "type": "object"
+            }
         },
         "persistence": {
+            "type": "object",
             "properties": {
                 "app": {
+                    "type": "object",
                     "properties": {
                         "accessMode": {
                             "type": "string"
                         },
                         "annotations": {
+                            "type": "object",
                             "properties": {
                                 "helm.sh/resource-policy": {
                                     "type": "string"
                                 }
-                            },
-                            "type": "object"
+                            }
                         },
                         "existingClaim": {
+                            "type": "object",
                             "properties": {
                                 "name": {
                                     "type": "string"
                                 }
-                            },
-                            "type": "object"
+                            }
                         },
                         "size": {
                             "type": "string"
@@ -609,29 +655,29 @@
                         "storageClass": {
                             "type": "string"
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "edocs": {
+                    "type": "object",
                     "properties": {
                         "accessMode": {
                             "type": "string"
                         },
                         "annotations": {
+                            "type": "object",
                             "properties": {
                                 "helm.sh/resource-policy": {
                                     "type": "string"
                                 }
-                            },
-                            "type": "object"
+                            }
                         },
                         "existingClaim": {
+                            "type": "object",
                             "properties": {
                                 "name": {
                                     "type": "string"
                                 }
-                            },
-                            "type": "object"
+                            }
                         },
                         "size": {
                             "type": "string"
@@ -639,29 +685,29 @@
                         "storageClass": {
                             "type": "string"
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "modules": {
+                    "type": "object",
                     "properties": {
                         "accessMode": {
                             "type": "string"
                         },
                         "annotations": {
+                            "type": "object",
                             "properties": {
                                 "helm.sh/resource-policy": {
                                     "type": "string"
                                 }
-                            },
-                            "type": "object"
+                            }
                         },
                         "existingClaim": {
+                            "type": "object",
                             "properties": {
                                 "name": {
                                     "type": "string"
                                 }
-                            },
-                            "type": "object"
+                            }
                         },
                         "size": {
                             "type": "string"
@@ -669,19 +715,18 @@
                         "storageClass": {
                             "type": "string"
                         }
-                    },
-                    "type": "object"
+                    }
                 }
-            },
-            "type": "object"
+            }
         },
         "redcap": {
+            "type": "object",
             "properties": {
                 "affinity": {
-                    "properties": {},
                     "type": "object"
                 },
                 "config": {
+                    "type": "object",
                     "properties": {
                         "adminMail": {
                             "type": "string"
@@ -690,8 +735,10 @@
                             "type": "string"
                         },
                         "database": {
+                            "type": "object",
                             "properties": {
                                 "auth": {
+                                    "type": "object",
                                     "properties": {
                                         "databaseName": {
                                             "type": "string"
@@ -700,8 +747,10 @@
                                             "type": "string"
                                         },
                                         "password": {
+                                            "type": "object",
                                             "properties": {
                                                 "secretKeyRef": {
+                                                    "type": "object",
                                                     "properties": {
                                                         "key": {
                                                             "type": "string"
@@ -709,24 +758,23 @@
                                                         "name": {
                                                             "type": "string"
                                                         }
-                                                    },
-                                                    "type": "object"
+                                                    }
                                                 },
                                                 "value": {
                                                     "type": "string"
                                                 }
-                                            },
-                                            "type": "object"
+                                            }
                                         },
                                         "username": {
                                             "type": "string"
                                         }
-                                    },
-                                    "type": "object"
+                                    }
                                 },
                                 "salt": {
+                                    "type": "object",
                                     "properties": {
                                         "secretKeyRef": {
+                                            "type": "object",
                                             "properties": {
                                                 "key": {
                                                     "type": "string"
@@ -734,17 +782,14 @@
                                                 "name": {
                                                     "type": "string"
                                                 }
-                                            },
-                                            "type": "object"
+                                            }
                                         },
                                         "value": {
                                             "type": "string"
                                         }
-                                    },
-                                    "type": "object"
+                                    }
                                 }
-                            },
-                            "type": "object"
+                            }
                         },
                         "externalURL": {
                             "type": "string"
@@ -756,13 +801,16 @@
                             "type": "string"
                         },
                         "mail": {
+                            "type": "object",
                             "properties": {
                                 "auth": {
+                                    "type": "object",
                                     "properties": {
                                         "from": {
                                             "type": "string"
                                         },
                                         "password": {
+                                            "type": "object",
                                             "properties": {
                                                 "existingSecret": {
                                                     "type": "string"
@@ -770,8 +818,7 @@
                                                 "value": {
                                                     "type": "string"
                                                 }
-                                            },
-                                            "type": "object"
+                                            }
                                         },
                                         "port": {
                                             "type": "integer"
@@ -788,11 +835,9 @@
                                         "username": {
                                             "type": "string"
                                         }
-                                    },
-                                    "type": "object"
+                                    }
                                 }
-                            },
-                            "type": "object"
+                            }
                         },
                         "organizationName": {
                             "type": "string"
@@ -801,10 +846,13 @@
                             "type": "boolean"
                         },
                         "tls": {
+                            "type": "object",
                             "properties": {
                                 "curlCA": {
+                                    "type": "object",
                                     "properties": {
                                         "secretKeyRef": {
+                                            "type": "object",
                                             "properties": {
                                                 "key": {
                                                     "type": "string"
@@ -812,17 +860,13 @@
                                                 "name": {
                                                     "type": "string"
                                                 }
-                                            },
-                                            "type": "object"
+                                            }
                                         }
-                                    },
-                                    "type": "object"
+                                    }
                                 }
-                            },
-                            "type": "object"
+                            }
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "extraContainers": {
                     "type": "array"
@@ -834,6 +878,7 @@
                     "type": "array"
                 },
                 "image": {
+                    "type": "object",
                     "properties": {
                         "pullPolicy": {
                             "type": "string"
@@ -844,12 +889,13 @@
                         "tag": {
                             "type": "string"
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "install": {
+                    "type": "object",
                     "properties": {
                         "communityAuth": {
+                            "type": "object",
                             "properties": {
                                 "existingSecret": {
                                     "type": "string"
@@ -860,13 +906,13 @@
                                 "username": {
                                     "type": "string"
                                 }
-                            },
-                            "type": "object"
+                            }
                         },
                         "enabled": {
                             "type": "boolean"
                         },
                         "image": {
+                            "type": "object",
                             "properties": {
                                 "pullPolicy": {
                                     "type": "string"
@@ -877,8 +923,7 @@
                                 "tag": {
                                     "type": "string"
                                 }
-                            },
-                            "type": "object"
+                            }
                         },
                         "overrideInstallContainer": {
                             "type": "array"
@@ -886,34 +931,33 @@
                         "version": {
                             "type": "string"
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "nodeSelector": {
-                    "properties": {},
                     "type": "object"
                 },
                 "replicaCount": {
                     "type": "integer"
                 },
                 "resources": {
-                    "properties": {},
                     "type": "object"
                 },
                 "tolerations": {
                     "type": "array"
                 }
-            },
-            "type": "object"
+            }
         },
         "restoreJob": {
+            "type": "object",
             "properties": {
                 "archiveName": {
                     "type": "string"
                 },
                 "database": {
+                    "type": "object",
                     "properties": {
                         "image": {
+                            "type": "object",
                             "properties": {
                                 "pullPolicy": {
                                     "type": "string"
@@ -924,15 +968,15 @@
                                 "tag": {
                                     "type": "string"
                                 }
-                            },
-                            "type": "object"
+                            }
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "downloader": {
+                    "type": "object",
                     "properties": {
                         "image": {
+                            "type": "object",
                             "properties": {
                                 "pullPolicy": {
                                     "type": "string"
@@ -943,17 +987,19 @@
                                 "tag": {
                                     "type": "string"
                                 }
-                            },
-                            "type": "object"
+                            }
                         },
                         "s3": {
+                            "type": "object",
                             "properties": {
                                 "backupPath": {
                                     "type": "string"
                                 },
                                 "config": {
+                                    "type": "object",
                                     "properties": {
                                         "auth": {
+                                            "type": "object",
                                             "properties": {
                                                 "accessKeyID": {
                                                     "type": "string"
@@ -964,8 +1010,7 @@
                                                 "secretAccessKey": {
                                                     "type": "string"
                                                 }
-                                            },
-                                            "type": "object"
+                                            }
                                         },
                                         "endpoint": {
                                             "type": "string"
@@ -976,14 +1021,11 @@
                                         "region": {
                                             "type": "string"
                                         }
-                                    },
-                                    "type": "object"
+                                    }
                                 }
-                            },
-                            "type": "object"
+                            }
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "enabled": {
                     "type": "boolean"
@@ -992,8 +1034,10 @@
                     "type": "array"
                 },
                 "redcap": {
+                    "type": "object",
                     "properties": {
                         "image": {
+                            "type": "object",
                             "properties": {
                                 "pullPolicy": {
                                     "type": "string"
@@ -1004,49 +1048,22 @@
                                 "tag": {
                                     "type": "string"
                                 }
-                            },
-                            "type": "object"
+                            }
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "resources": {
-                    "properties": {
-                        "limits": {
-                            "properties": {
-                                "cpu": {
-                                    "type": "string"
-                                },
-                                "memory": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        },
-                        "requests": {
-                            "properties": {
-                                "cpu": {
-                                    "type": "string"
-                                },
-                                "memory": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    },
                     "type": "object"
                 },
                 "schedule": {
                     "type": "string"
                 }
-            },
-            "type": "object"
+            }
         },
         "serviceAccount": {
+            "type": "object",
             "properties": {
                 "annotations": {
-                    "properties": {},
                     "type": "object"
                 },
                 "create": {
@@ -1055,15 +1072,15 @@
                 "name": {
                     "type": "string"
                 }
-            },
-            "type": "object"
+            }
         },
         "services": {
+            "type": "object",
             "properties": {
                 "httpd": {
+                    "type": "object",
                     "properties": {
                         "annotations": {
-                            "properties": {},
                             "type": "object"
                         },
                         "enabled": {
@@ -1078,13 +1095,12 @@
                         "type": {
                             "type": "string"
                         }
-                    },
-                    "type": "object"
+                    }
                 },
                 "redcap": {
+                    "type": "object",
                     "properties": {
                         "annotations": {
-                            "properties": {},
                             "type": "object"
                         },
                         "enabled": {
@@ -1105,12 +1121,9 @@
                         "type": {
                             "type": "string"
                         }
-                    },
-                    "type": "object"
+                    }
                 }
-            },
-            "type": "object"
+            }
         }
-    },
-    "type": "object"
+    }
 }

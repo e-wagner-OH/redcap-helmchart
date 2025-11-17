@@ -142,7 +142,7 @@ redcap:
     logAllErrors: "FALSE"
     # -- The URL on which the application is exposed (useful if the application is behind a reverse-proxy).
     # @section -- REDCap settings
-    externalURL: "http://localhost/"
+    externalURL: "http://localhost"
     # -- The name of the institution that is presented to the users.
     # @section -- REDCap settings
     institutionName: "REDCap Local Institution"
@@ -266,6 +266,21 @@ redcap:
 #             See original documentation @ https://github.com/bitnami/charts/tree/main/bitnami/mysql
 # @section -- REDCap MySQL Database settings
 mysql:
+
+  global:
+    security:
+      # -- Set to true to enable bitnami charts to use insecure images like bitmani legacy images.
+      # @section -- REDCap MySQL Database settings
+      allowInsecureImages: true
+
+  image:
+    # -- Image repository for MySQL image.
+    # @section -- REDCap MySQL Database settings
+    repository: bitnamilegacy/mysql
+    # -- Image tag for MySQL image.
+    # @section -- REDCap MySQL Database settings
+    tag: 9.4.0-debian-12-r1
+
   # -- Override of the full name of the MySQL Database deployment.
   #    Impacts the name of the services REDCap will use to connect to the Database.
   # @section -- REDCap MySQL Database settings
@@ -359,7 +374,7 @@ backupJob:
     image:
       # -- Image repository for the REDCap database backup container.
       # @section -- REDCap Backup Job's settings
-      repository: "bitnami/mysql"
+      repository: "bitnamilegacy/mysql"
       # -- Image tag for the REDCap database backup container.
       # @section -- REDCap Backup Job's settings
       tag: "9.3.0-debian-12-r1"
@@ -442,7 +457,7 @@ restoreJob:
     image:
       # -- Image repository for the REDCap database restore container.
       # @section -- REDCap Restore Job's settings
-      repository: "bitnami/mysql"
+      repository: "bitnamilegacy/mysql"
       # -- Image yag for the REDCap application restore container.
       # @section -- REDCap Restore Job's settings
       tag: "9.3.0-debian-12-r1"
@@ -502,6 +517,23 @@ audit:
   # -- If set to `true`, enables the audit log-shipping solution.
   # @section -- REDCap Audit Log Shipper settings
   enabled: false
+
+
+
+  global:
+    security:
+      # -- Set to true to enable bitnami charts to use insecure images like bitmani legacy images.
+      # @section -- REDCap Audit Log Shipper settings
+      allowInsecureImages: true
+  
+
+  image:
+    # -- Image repository for Logstash.
+    # @section -- REDCap Audit Log Shipper settings
+    repository: bitnamilegacy/logstash
+    # -- Image tag for Logstash.
+    # @section -- REDCap Audit Log Shipper settings
+    tag: 9.1.2-debian-12-r0
 
   podLabels:
     # -- Role to set for the networkPolicies. Not to be changed, unless you know exactly what you are doing!
@@ -621,7 +653,7 @@ audit:
   # @default -- Mounted on `/var/run/secret/api-ca.pem`
   - name: "api-ca"
     mountPath: /var/run/secret/api-ca.pem
-    subpath: ""
+    subPath: ""
 
   # Configuration of the endpoint of the audit stack the logs are send to.
   logsApi:
