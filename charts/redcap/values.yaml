@@ -386,7 +386,7 @@ backupJob:
     image:
       # -- Image repository for the REDCap backup uploader container.
       # @section -- REDCap Backup Job's settings
-      repository: "bitnami/rclone"
+      repository: "bitnamilegacy/rclone"
       # -- Image tag for the REDCap backup uploader container.
       # @section -- REDCap Backup Job's settings
       tag: "1.69.3"
@@ -469,7 +469,7 @@ restoreJob:
     image:
       # -- Image repository for the REDCap downloader container.
       # @section -- REDCap Restore Job's settings
-      repository: "bitnami/rclone"
+      repository: "bitnamilegacy/rclone"
       # -- Image tag for the REDCap downloader container.
       # @section -- REDCap Restore Job's settings
       tag: "1.69.3"
