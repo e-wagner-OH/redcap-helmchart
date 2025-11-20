@@ -155,7 +155,7 @@ helm install redcap aphp-redcap/redcap -f ./examples/basic-install.yaml
 | backupJob.database.image.repository | string | `"bitnamilegacy/mysql"` | Image repository for the REDCap database backup container. |
 | backupJob.database.image.tag | string | `"9.3.0-debian-12-r1"` | Image tag for the REDCap database backup container. |
 | backupJob.database.image.pullPolicy | string | `"Always"` | Image pullPolicy for the REDCap database backup container. |
-| backupJob.uploader.image.repository | string | `"bitnami/rclone"` | Image repository for the REDCap backup uploader container. |
+| backupJob.uploader.image.repository | string | `"bitnamilegacy/rclone"` | Image repository for the REDCap backup uploader container. |
 | backupJob.uploader.image.tag | string | `"1.69.3"` | Image tag for the REDCap backup uploader container. |
 | backupJob.uploader.image.pullPolicy | string | `"Always"` | Image pullPolicy for the REDCap backup uploader container. |
 | backupJob.uploader.s3.backupPath | string | `"redcap-backup"` | Path of the REDcap backup archive on the S3 bucket. |
@@ -181,7 +181,7 @@ helm install redcap aphp-redcap/redcap -f ./examples/basic-install.yaml
 | restoreJob.database.image.repository | string | `"bitnamilegacy/mysql"` | Image repository for the REDCap database restore container. |
 | restoreJob.database.image.tag | string | `"9.3.0-debian-12-r1"` | Image yag for the REDCap application restore container. |
 | restoreJob.database.image.pullPolicy | string | `"Always"` | Image pullPolicy for the REDCap application restore container. |
-| restoreJob.downloader.image.repository | string | `"bitnami/rclone"` | Image repository for the REDCap downloader container. |
+| restoreJob.downloader.image.repository | string | `"bitnamilegacy/rclone"` | Image repository for the REDCap downloader container. |
 | restoreJob.downloader.image.tag | string | `"1.69.3"` | Image tag for the REDCap downloader container. |
 | restoreJob.downloader.image.pullPolicy | string | `"Always"` | Image pullPolicy for the REDCap downloader container. |
 | restoreJob.downloader.s3.backupPath | string | `"redcap-backup"` | Path of the REDcap backup archive on the S3 bucket. |
