@@ -235,12 +235,12 @@ Secrets names
 {{ .Release.Name }}-db-audit-credentials
 {{- end }}
 
-{{- define "mysql.secrets.password.name" -}}
-{{ .Release.Name }}-mysql
+{{- define "mariadb.secrets.password.name" -}}
+{{ .Release.Name }}-mariadb
 {{- end }}
 
-{{- define "mysql.secrets.password.key" -}}
-mysql-password
+{{- define "mariadb.secrets.password.key" -}}
+mariadb-password
 {{- end }}
 
 {{/*

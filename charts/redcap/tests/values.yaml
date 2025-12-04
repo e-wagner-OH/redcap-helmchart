@@ -70,7 +70,7 @@ redcap:
   affinity: {}
 
 
-mysql:
+mariadb:
   enabled: true
   primary:
     existingConfigmap: "redcap-ext-qual-database-config"
@@ -163,7 +163,7 @@ audit:
     valueFrom:
       secretKeyRef:
         name: "test"
-        key: "mysql-password"
+        key: "mariadb-password"
   - name: AUDIT_TOKEN
     valueFrom:
       secretKeyRef:

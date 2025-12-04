@@ -484,7 +484,8 @@
             },
             "type": "object"
         },
-        "mysql": {
+        "mariadb": {
+            "type": "object",
             "properties": {
                 "architecture": {
                     "type": "string"
@@ -557,7 +558,7 @@
                             "properties": {
                                 "port": {
                                     "properties": {
-                                        "mysql": {
+                                        "mariadb": {
                                             "type": "integer"
                                         }
                                     },

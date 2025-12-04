@@ -39,13 +39,13 @@ redcap:
           key: "salt"
         
       auth:
-        hostname: "redcap-prod-mysql"
+        hostname: "redcap-prod-mariadb"
         databaseName: "redcap"
         username: "redcap"        
         password: 
           secretKeyRef: 
-            name: "redcap-prod-mysql-passwd"
-            key: "mysql-password"
+            name: "redcap-prod-mariadb-passwd"
+            key: "mariadb-password"
 
     mail: 
       auth:
@@ -68,15 +68,15 @@ redcap:
       cpu: "10"
 
 
-mysql:
+mariadb:
   enabled: true
-  fullnameOverride: "redcap-prod-mysql"
+  fullnameOverride: "redcap-prod-mariadb"
   architecture: "standalone"
   auth:
     createDatabase: true
     database: redcap
     username: redcap
-    existingSecret: "redcap-prod-mysql-passwd"
+    existingSecret: "redcap-prod-mariadb-passwd"
   primary:
     existingConfigmap: "redcap-prod-database-config"
     persistence: 
@@ -163,8 +163,8 @@ audit:
   - name: MYSQL_PASSWD
     valueFrom:
       secretKeyRef:
-        name: "redcap-prod-mysql-passwd"
-        key: "mysql-password"
+        name: "redcap-prod-mariadb-passwd"
+        key: "mariadb-password"
   - name: AUDIT_TOKEN
     valueFrom:
       secretKeyRef:

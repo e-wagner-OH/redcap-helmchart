@@ -75,7 +75,7 @@ spec:
             - "sh"
             - "-c"
             - "mkdir -v /backup-data/redcap-db && \
-               mysqldump \
+               mariadbdump \
                   --host={{ .Values.redcap.config.database.auth.hostname }} \
                   --user={{ .Values.redcap.config.database.auth.username }} \
                   --password=${DB_PASSWD} \  

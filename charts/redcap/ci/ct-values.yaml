@@ -11,7 +11,7 @@ redcap:
   install:
     enabled: false
 
-mysql:
+mariadb:
   primary:
     resources:
       requests:

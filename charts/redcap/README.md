@@ -23,7 +23,7 @@ Kubernetes: `>= 1.24.0-0`
 | Repository | Name | Version |
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | audit(logstash) | 7.0.4 |
-| https://charts.bitnami.com/bitnami | mysql | 13.0.2 |
+| https://charts.bitnami.com/bitnami | mariadb | 13.0.2 |
 
 ## Deployment Architecture
 
@@ -98,7 +98,7 @@ helm install redcap aphp-redcap/redcap -f ./examples/basic-install.yaml
 | redcap.config.database.salt.value | string | `"UjtNfDs2ELs2v6p"` | The value of the salt used by the application to cypher sensitive data. |
 | redcap.config.database.salt.secretKeyRef.name | string | `""` | The name of the secret holding the value of the salt used by the application to cypher sensitive data.    If set, the value of that secret will override the `redcap.config.database.salt.value` value. |
 | redcap.config.database.salt.secretKeyRef.key | string | `""` | The key of the secret holding the value of the salt used by the application to cypher sensitive data.    If set, the value of that secret will override the `redcap.config.database.salt.value` value. |
-| redcap.config.database.auth.hostname | string | `"redcap-mysql"` | The hostname of REDCap's database instance. |
+| redcap.config.database.auth.hostname | string | `"redcap-mariadb"` | The hostname of REDCap's database instance. |
 | redcap.config.database.auth.databaseName | string | `"redcap"` | The name of REDCAP's database. |
 | redcap.config.database.auth.username | string | `"redcap"` | The username used to connect to REDCAP's database. |
 | redcap.config.database.auth.password.value | string | `""` | The password used to connect to REDCAP's database, as a clear string. Don't use the option for a production-grade deployment,     refer to an external secret instead! |
@@ -122,21 +122,24 @@ helm install redcap aphp-redcap/redcap -f ./examples/basic-install.yaml
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| mysql.fullnameOverride | string | `"redcap-mysql"` | Override of the full name of the MySQL Database deployment.    Impacts the name of the services REDCap will use to connect to the Database. |
-| mysql.enabled | bool | `true` | If set to `true`, enables the deployment of MySQL as REDCap's database. |
-| mysql.architecture | string | `"standalone"` | Deployment type for the database, standalone or replicated. |
-| mysql.initdbScriptsConfigMap | string | `""` | Name of a configmap holding an SQL script to initialize the database with. |
-| mysql.networkPolicy.enabled | bool | `true` | Enable creation of NetworkPolicy resources |
-| mysql.auth.createDatabase | bool | `true` | Automatically create a database at the first run. |
-| mysql.auth.database | string | `"redcap"` | Name of the database automatically created at the first run, if `mysql.auth.createDatabase` has been set to `true` |
-| mysql.auth.username | string | `"redcap"` | Name of the database user automatically created at the first run, if `mysql.auth.createDatabase` has been set to `true` |
-| mysql.auth.password | string | `"Redcap*!"` | Name of the database user automatically created at the first run, if `mysql.auth.createDatabase` has been set to `true`    Not secure in production, use secret reference instead! |
-| mysql.primary.existingConfigmap | string | `"redcap-database-config"` | Name of existing ConfigMap with MySQL Primary configuration. |
-| mysql.primary.podLabels."app.kubernetes.io/role" | string | `"redcap-mysql"` | Role to set for the networkPolicies. Not to be changed, unless you know exactly what you are doing! |
-| mysql.primary.service.port.mysql | int | `3306` | Port exposed by the MySQL service. |
-| mysql.primary.persistence.storageClass | string | `"standard"` | StorageClass used for database persistence. |
-| mysql.primary.persistence.accessModes | list | `["ReadWriteOnce"]` | AccessMode used for database persistence. |
-| mysql.primary.persistence.size | string | `"10G"` | Size of the storage used for database persistence. |
+| mariadb.global.security.allowInsecureImages | bool | `true` | Set to true to enable bitnami charts to use insecure images like bitmani legacy images. |
+| mariadb.image.repository | string | `"docker.io/mariadb"` | Image repository for MySQL image. |
+| mariadb.image.tag | string | `"9.4.0-debian-12-r1"` | Image tag for MySQL image. |
+| mariadb.fullnameOverride | string | `"redcap-mariadb"` | Override of the full name of the MySQL Database deployment.    Impacts the name of the services REDCap will use to connect to the Database. |
+| mariadb.enabled | bool | `true` | If set to `true`, enables the deployment of MySQL as REDCap's database. |
+| mariadb.architecture | string | `"standalone"` | Deployment type for the database, standalone or replicated. |
+| mariadb.initdbScriptsConfigMap | string | `""` | Name of a configmap holding an SQL script to initialize the database with. |
+| mariadb.networkPolicy.enabled | bool | `true` | Enable creation of NetworkPolicy resources |
+| mariadb.auth.createDatabase | bool | `true` | Automatically create a database at the first run. |
+| mariadb.auth.database | string | `"redcap"` | Name of the database automatically created at the first run, if `mariadb.auth.createDatabase` has been set to `true` |
+| mariadb.auth.username | string | `"redcap"` | Name of the database user automatically created at the first run, if `mariadb.auth.createDatabase` has been set to `true` |
+| mariadb.auth.password | string | `"Redcap*!"` | Name of the database user automatically created at the first run, if `mariadb.auth.createDatabase` has been set to `true`    Not secure in production, use secret reference instead! |
+| mariadb.primary.existingConfigmap | string | `"redcap-database-config"` | Name of existing ConfigMap with MySQL Primary configuration. |
+| mariadb.primary.podLabels."app.kubernetes.io/role" | string | `"redcap-mariadb"` | Role to set for the networkPolicies. Not to be changed, unless you know exactly what you are doing! |
+| mariadb.primary.service.port.mariadb | int | `3306` | Port exposed by the MySQL service. |
+| mariadb.primary.persistence.storageClass | string | `"standard"` | StorageClass used for database persistence. |
+| mariadb.primary.persistence.accessModes | list | `["ReadWriteOnce"]` | AccessMode used for database persistence. |
+| mariadb.primary.persistence.size | string | `"10G"` | Size of the storage used for database persistence. |
 
 ### REDCap Backup Job's settings
 
@@ -149,7 +152,7 @@ helm install redcap aphp-redcap/redcap -f ./examples/basic-install.yaml
 | backupJob.redcap.image.repository | string | `"busybox"` | Image repository for the REDCap application backup container. |
 | backupJob.redcap.image.tag | string | `"1"` | Image tag for the REDCap application backup container. |
 | backupJob.redcap.image.pullPolicy | string | `"Always"` | Image pullPolicy for the REDCap application backup container. |
-| backupJob.database.image.repository | string | `"bitnami/mysql"` | Image repository for the REDCap database backup container. |
+| backupJob.database.image.repository | string | `"docker.io/mariadb"` | Image repository for the REDCap database backup container. |
 | backupJob.database.image.tag | string | `"9.3.0-debian-12-r1"` | Image tag for the REDCap database backup container. |
 | backupJob.database.image.pullPolicy | string | `"Always"` | Image pullPolicy for the REDCap database backup container. |
 | backupJob.uploader.image.repository | string | `"bitnami/rclone"` | Image repository for the REDCap backup uploader container. |
@@ -175,7 +178,7 @@ helm install redcap aphp-redcap/redcap -f ./examples/basic-install.yaml
 | restoreJob.redcap.image.repository | string | `"busybox"` | Image repository for the REDCap application restore container. |
 | restoreJob.redcap.image.tag | string | `"1"` | Image tag for the REDCap application restore container. |
 | restoreJob.redcap.image.pullPolicy | string | `"Always"` | Image pullPolicy for the REDCap application restore container. |
-| restoreJob.database.image.repository | string | `"bitnami/mysql"` | Image repository for the REDCap database restore container. |
+| restoreJob.database.image.repository | string | `"docker.io/mariadb"` | Image repository for the REDCap database restore container. |
 | restoreJob.database.image.tag | string | `"9.3.0-debian-12-r1"` | Image yag for the REDCap application restore container. |
 | restoreJob.database.image.pullPolicy | string | `"Always"` | Image pullPolicy for the REDCap application restore container. |
 | restoreJob.downloader.image.repository | string | `"bitnami/rclone"` | Image repository for the REDCap downloader container. |
@@ -200,12 +203,12 @@ helm install redcap aphp-redcap/redcap -f ./examples/basic-install.yaml
 | audit.initContainers[0].image | string | `"alpine:3.21.3"` | Image used for the pod downloading the driver. |
 | audit.initContainers[0].imagePullPolicy | string | `"Always"` | Image pullPolicy used for the pod downloading the driver. |
 | audit.initContainers[0].env[0] | object | URL of the JDBC driver to download. | Env var to set the URL of the JDBC driver to download. |
-| audit.initContainers[0].env[0].value | string | `"https://downloads.mysql.com/archives/get/p/3/file/mysql-connector-j-8.4.0.tar.gz"` | URL of the JDBC driver to download. |
+| audit.initContainers[0].env[0].value | string | `"https://downloads.mariadb.com/archives/get/p/3/file/mariadb-connector-j-8.4.0.tar.gz"` | URL of the JDBC driver to download. |
 | audit.initContainers[0].command | list | Using `wget` do download the driver, and moving it to the shared persistent volume. | Command to be run to download and extract the JDBC driver. |
 | audit.initContainers[0].volumeMounts[0] | object | Mounted to `/driver` | Definition of the volumeMount used to persist the JDBC driver. |
 | audit.initContainers[0].volumeMounts[0].mountPath | string | `"/driver"` | Mount path of the volume used to persist the JDBC driver. |
 | audit.enableMultiplePipelines | bool | `true` | If set to `true`, allows the use of multiple pipelines. Needed for audit concurrent pipelines for performance reasons. |
-| audit.existingConfiguration | string | `"redcap-mysql-audit-logstash-pipeline"` | Name of an existing ConfigMap holding the pipeline(s)'s configuration. |
+| audit.existingConfiguration | string | `"redcap-mariadb-audit-logstash-pipeline"` | Name of an existing ConfigMap holding the pipeline(s)'s configuration. |
 | audit.extraEnvVars[0] | object | Empty external secret reference to REDCap DB password | Extra environment variables related to REDCap MySQL DB's password. |
 | audit.extraEnvVars[1] | object | Empty external secret reference to the API token to reach the audit stack API | Extra environment variables related to the API token to reach the audit stack API. |
 | audit.persistence.enabled | bool | `true` | If set to `true`, enables persistence for Logstash. Useful for disaster recovery purposes, as the pipeline(s)'s cache is stored persisted by Logstash. |
@@ -300,7 +303,7 @@ helm install redcap aphp-redcap/redcap -f ./examples/basic-install.yaml
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| redcap.config.database.auth.password | object | `{"secretKeyRef":{"key":"","name":""},"value":""}` | The password used to connect to REDCAP's database. Automatically retrieved from the default mysql secret name if you enbaled    the MySQL database embedded in this chart. If you specified a reference to an secret for your MySQL database password, you     have to set it here also, in the `secretKeyRef` section. |
+| redcap.config.database.auth.password | object | `{"secretKeyRef":{"key":"","name":""},"value":""}` | The password used to connect to REDCAP's database. Automatically retrieved from the default mariadb secret name if you enbaled    the MySQL database embedded in this chart. If you specified a reference to an secret for your MySQL database password, you     have to set it here also, in the `secretKeyRef` section. |
 | persistence.app.annotations."helm.sh/resource-policy" | string | `"keep"` |  |
 | persistence.modules.annotations."helm.sh/resource-policy" | string | `"keep"` |  |
 

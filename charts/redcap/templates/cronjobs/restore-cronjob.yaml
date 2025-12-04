@@ -114,7 +114,7 @@ spec:
             command: 
             - "sh"
             - "-c"
-            - "mysql \
+            - "mariadb \
                   --host={{ .Values.redcap.config.database.auth.hostname }} \
                   --database={{ .Values.redcap.config.database.auth.databaseName }} \
                   --user={{ .Values.redcap.config.database.auth.username }} \

@@ -20,9 +20,9 @@ set -e
 #
 ####################################################################################
 
-mysql \
+mariadb \
     --host={{ .Values.redcap.config.database.auth.hostname }} \
-    --port={{ default 3306 .Values.mysql.primary.service.ports.mysql }} \
+    --port={{ default 3306 .Values.mariadb.service.port }} \
     --user={{ .Values.redcap.config.database.auth.username }} \
     --password=${DB_PASSWD} \
     --database={{ .Values.redcap.config.database.auth.databaseName }} <<EOF

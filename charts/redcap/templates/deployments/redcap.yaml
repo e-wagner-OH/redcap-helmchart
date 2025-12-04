@@ -89,22 +89,22 @@ spec:
         {{- end }}
 
         - name: wait-for-db
-          image: "{{ .Values.mysql.image.repository }}:{{ .Values.mysql.image.tag }}"
-          imagePullPolicy: {{ .Values.mysql.image.pullPolicy }}
+          image: "{{ .Values.mariadb.image.repository }}:{{ .Values.mariadb.image.tag }}"
+          imagePullPolicy: {{ .Values.mariadb.image.pullPolicy }}
 
           env:
             - name: DB_PASSWD
               valueFrom:
                 secretKeyRef:
-                  name: {{ default (include "mysql.secrets.password.name" .) .Values.redcap.config.database.auth.password.secretKeyRef.name }}
-                  key: {{ default (include "mysql.secrets.password.key" .) .Values.redcap.config.database.auth.password.secretKeyRef.key }}
+                  name: {{ default (include "mariadb.secrets.password.name" .) .Values.redcap.config.database.auth.password.secretKeyRef.name }}
+                  key: {{ default (include "mariadb.secrets.password.key" .) .Values.redcap.config.database.auth.password.secretKeyRef.key }}
 
           command: 
           - "sh"
           - "-c"
-          - "mysql \
+          - "mariadb \
                 --host={{ .Values.redcap.config.database.auth.hostname }} \
-                --port={{ default 3306 .Values.mysql.primary.service.ports.mysql }}
+                --port={{ default 3306 .Values.mariadb.service.port }}
                 --user={{ .Values.redcap.config.database.auth.username }} \
                 --password=${DB_PASSWD} \  
                 --database={{ .Values.redcap.config.database.auth.databaseName }} \
@@ -158,8 +158,8 @@ spec:
           - name: DB_PASSWD
             valueFrom:
               secretKeyRef:
-                name: {{ default (include "mysql.secrets.password.name" .) .Values.redcap.config.database.auth.password.secretKeyRef.name }}
-                key: {{ default (include "mysql.secrets.password.key" .) .Values.redcap.config.database.auth.password.secretKeyRef.key }}
+                name: {{ default (include "mariadb.secrets.password.name" .) .Values.redcap.config.database.auth.password.secretKeyRef.name }}
+                key: {{ default (include "mariadb.secrets.password.key" .) .Values.redcap.config.database.auth.password.secretKeyRef.key }}
 
         {{- if .Values.redcap.install.enabled }}
         startupProbe:
@@ -221,7 +221,7 @@ spec:
           mountPath: /app/redcap/temp
         - name: server-tmp
           mountPath: /tmp
-        - name: redcap-mysql-creds
+        - name: redcap-mariadb-creds
           mountPath: /var/run/secrets/credentials.php
           subPath: credentials.php
         - name: redcap-config-script
@@ -231,7 +231,7 @@ spec:
           mountPath: /tmp/redcap-setup.sh
           subPath: redcap-setup.sh
         {{- if .Values.redcap.config.database.auth.password.secretKeyRef.key }}
-        - name: mysql-password
+        - name: mariadb-password
           mountPath: /var/run/secrets/DB_PASSWD
           subPath: {{ .Values.redcap.config.database.auth.password.secretKeyRef.key }}
         {{- end }}
@@ -316,11 +316,11 @@ spec:
       - name: database-conf
         configMap:
           name: {{ .Release.Name }}-database-conf
-      - name: redcap-mysql-creds
+      - name: redcap-mariadb-creds
         secret:
           secretName: {{ include "redcap.secrets.database.creds.name" . }}
       {{- if .Values.redcap.config.database.auth.password.secretKeyRef.name }}
-      - name: mysql-password
+      - name: mariadb-password
         secret:
           secretName: {{ .Values.redcap.config.database.auth.password.secretKeyRef.name }}
       {{- end }}

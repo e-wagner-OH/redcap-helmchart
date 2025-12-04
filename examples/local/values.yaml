@@ -34,7 +34,7 @@ redcap:
       memory: "4Gi"
       cpu: "2"
 
-mysql:
+mariadb:
   primary:
     resources:
       requests:
