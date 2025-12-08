@@ -115,6 +115,10 @@ spec:
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
+            runAsUser: 999
+            runAsGroup: 999
+            runAsNonRoot: true   
+
 
         - name: msmtp-config-injector
           image: "busybox:1"

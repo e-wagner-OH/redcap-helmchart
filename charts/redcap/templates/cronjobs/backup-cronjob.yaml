@@ -47,6 +47,11 @@ spec:
 
             securityContext:
               allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              runAsUser: 999
+              runAsGroup: 999
+              runAsNonRoot: true   
+
 
             volumeMounts:
             - name: edocs
@@ -75,7 +80,7 @@ spec:
             - "sh"
             - "-c"
             - "mkdir -v /backup-data/redcap-db && \
-               mariadbdump \
+               mariadb-dump \
                   --host={{ .Values.redcap.config.database.auth.hostname }} \
                   --user={{ .Values.redcap.config.database.auth.username }} \
                   --password=${DB_PASSWD} \  
@@ -88,6 +93,11 @@ spec:
 
             securityContext:
               allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              runAsUser: 999
+              runAsGroup: 999
+              runAsNonRoot: true   
+
 
             volumeMounts:
             - name: backup-data
@@ -127,7 +137,7 @@ spec:
             - mountPath: /backup-data
               name: backup-data
             - name: rclone-conf
-              mountPath: /.rclone.conf
+              mountPath: /config/rclone/rclone.conf
               subPath: rclone.conf
             - name: upload-script
               mountPath: /tmp/backup-upload.sh
