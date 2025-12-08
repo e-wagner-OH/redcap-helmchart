@@ -14,10 +14,10 @@ home: https://www.project-redcap.org/
 sources:
   - https://github.com/aphp/redcap-helmchart
 dependencies:
-  - condition: mysql.enabled
-    name: mysql
-    repository: https://charts.bitnami.com/bitnami
-    version: 13.0.2
+  - condition: mariadb.enabled
+    name: mariadb
+    repository: oci://registry-1.docker.io/cloudpirates
+    version: 0.8.0
   - condition: audit.enabled
     name: logstash
     alias: audit

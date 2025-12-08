@@ -13,9 +13,9 @@ $password 	= {{ printf "%s" "getenv(\"DB_PASSWD\")" }}; // Mounted as k8s secret
 
 // You may optionally utilize a database connection over SSL/TLS for improved security. To do so, at minimum
 // you must provide the path of the key file, the certificate file, and certificate authority file.
-$db_ssl_key  	= '';		// e.g., '/etc/mysql/ssl/client-key.pem'
-$db_ssl_cert 	= '';		// e.g., '/etc/mysql/ssl/client-cert.pem'
-$db_ssl_ca   	= '';		// e.g., '/etc/mysql/ssl/ca-cert.pem'
+$db_ssl_key  	= '';		// e.g., '/etc/mariadb/ssl/client-key.pem'
+$db_ssl_cert 	= '';		// e.g., '/etc/mariadb/ssl/client-cert.pem'
+$db_ssl_ca   	= '';		// e.g., '/etc/mariadb/ssl/ca-cert.pem'
 $db_ssl_capath 	= NULL;
 $db_ssl_cipher 	= NULL;
 $db_ssl_verify_server_cert = false; // Set to TRUE to force the database connection to verify the SSL certificate

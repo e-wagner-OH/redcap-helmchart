@@ -261,7 +261,10 @@
                         "image": {
                             "type": "object",
                             "properties": {
-                                "pullPolicy": {
+                                "imagePullPolicy": {
+                                    "type": "string"
+                                },
+                                "registry": {
                                     "type": "string"
                                 },
                                 "repository": {
@@ -504,12 +507,9 @@
                 }
             }
         },
-        "mysql": {
+        "mariadb": {
             "type": "object",
             "properties": {
-                "architecture": {
-                    "type": "string"
-                },
                 "auth": {
                     "type": "object",
                     "properties": {
@@ -519,10 +519,21 @@
                         "database": {
                             "type": "string"
                         },
+                        "enabled": {
+                            "type": "boolean"
+                        },
                         "password": {
                             "type": "string"
                         },
                         "username": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "config": {
+                    "type": "object",
+                    "properties": {
+                        "existingConfigmap": {
                             "type": "string"
                         }
                     }
@@ -533,22 +544,15 @@
                 "fullnameOverride": {
                     "type": "string"
                 },
-                "global": {
-                    "type": "object",
-                    "properties": {
-                        "security": {
-                            "type": "object",
-                            "properties": {
-                                "allowInsecureImages": {
-                                    "type": "boolean"
-                                }
-                            }
-                        }
-                    }
-                },
                 "image": {
                     "type": "object",
                     "properties": {
+                        "imagePullPolicy": {
+                            "type": "string"
+                        },
+                        "registry": {
+                            "type": "string"
+                        },
                         "repository": {
                             "type": "string"
                         },
@@ -556,9 +560,6 @@
                             "type": "string"
                         }
                     }
-                },
-                "initdbScriptsConfigMap": {
-                    "type": "string"
                 },
                 "networkPolicy": {
                     "type": "object",
@@ -568,49 +569,36 @@
                         }
                     }
                 },
-                "primary": {
+                "persistence": {
                     "type": "object",
                     "properties": {
-                        "existingConfigmap": {
+                        "accessModes": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "size": {
                             "type": "string"
                         },
-                        "persistence": {
-                            "type": "object",
-                            "properties": {
-                                "accessModes": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    }
-                                },
-                                "size": {
-                                    "type": "string"
-                                },
-                                "storageClass": {
-                                    "type": "string"
-                                }
-                            }
-                        },
-                        "podLabels": {
-                            "type": "object",
-                            "properties": {
-                                "app.kubernetes.io/role": {
-                                    "type": "string"
-                                }
-                            }
-                        },
-                        "service": {
-                            "type": "object",
-                            "properties": {
-                                "port": {
-                                    "type": "object",
-                                    "properties": {
-                                        "mysql": {
-                                            "type": "integer"
-                                        }
-                                    }
-                                }
-                            }
+                        "storageClass": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "podLabels": {
+                    "type": "object",
+                    "properties": {
+                        "app.kubernetes.io/role": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "service": {
+                    "type": "object",
+                    "properties": {
+                        "port": {
+                            "type": "integer"
                         }
                     }
                 }
@@ -959,7 +947,10 @@
                         "image": {
                             "type": "object",
                             "properties": {
-                                "pullPolicy": {
+                                "imagePullPolicy": {
+                                    "type": "string"
+                                },
+                                "registry": {
                                     "type": "string"
                                 },
                                 "repository": {

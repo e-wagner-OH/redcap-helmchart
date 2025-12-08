@@ -25,12 +25,12 @@ spec:
     - to:
       - podSelector:
           matchLabels:
-            {{- range $labelKey, $labelValue := .Values.mysql.primary.podLabels }}
+            {{- range $labelKey, $labelValue := .Values.mariadb.primary.podLabels }}
               {{ $labelKey | nindent 12 }}: {{ $labelValue }}
             {{- end }}
       ports:
         - protocol: TCP
-          port: {{ default 3306 .Values.mysql.primary.service.ports.mysql }}
+          port: {{ default 3306 .Values.mariadb.primary.service.ports.mariadb }}
     
     # allow DNS resolution
     - to:
