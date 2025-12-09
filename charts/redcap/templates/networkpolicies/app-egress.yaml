@@ -30,7 +30,7 @@ spec:
             {{- end }}
       ports:
         - protocol: TCP
-          port: {{ default 3306 .Values.mariadb.primary.service.ports.mariadb }}
+          port: {{ default 3306 .Values.mariadb.service.port }}
     
     # allow DNS resolution
     - to:
