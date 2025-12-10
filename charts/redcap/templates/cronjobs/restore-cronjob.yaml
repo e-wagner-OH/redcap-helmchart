@@ -78,10 +78,10 @@ spec:
             command: 
             - "sh"
             - "-c"
-            # Purging the edocs (user's uploaded files) and redcap (application codebase, except database.php which is a custom mount from a secret) befre restoring them, to have idempotent backups 
+            # Purging the edocs (user's uploaded files) and redcap (application codebase)
             - "rm -f -r -v /edocs/* && \
                cp -f -r -v /backup-data/redcap-edocs/* /edocs && \
-               find /redcap -mindepth 1 -name \"*\" -not \\( -name \"database.php\" \\) -prune -exec rm -r -f -v {} \\; && \
+               rm -f -r -v /redcap/* && \
                cp -f -r -v /backup-data/redcap-app/* /redcap"
 
             securityContext:
