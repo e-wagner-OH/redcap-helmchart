@@ -25,7 +25,7 @@ spec:
     - to:
       - podSelector:
           matchLabels:
-            {{- range $labelKey, $labelValue := .Values.mariadb.primary.podLabels }}
+            {{- range $labelKey, $labelValue := .Values.mariadb.podLabels }}
               {{ $labelKey | nindent 12 }}: {{ $labelValue }}
             {{- end }}
       ports:

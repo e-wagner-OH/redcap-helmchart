@@ -6,7 +6,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-    {{- range $labelKey, $labelValue := .Values.mariadb.primary.podLabels }}
+    {{- range $labelKey, $labelValue := .Values.mariadb.podLabels }}
       {{ $labelKey | nindent 6 }}: {{ $labelValue }}
     {{- end }}
   policyTypes:
