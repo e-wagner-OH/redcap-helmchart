@@ -90,7 +90,7 @@ spec:
             volumeMounts:
             - name: edocs
               mountPath: /edocs
-            - name: redcap-code
+            - name: redcap-app
               mountPath: /redcap
             - name: backup-data
               mountPath: /backup-data
