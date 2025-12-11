@@ -166,9 +166,9 @@ spec:
                   key: {{ default (include "mariadb.secrets.password.key" .) .Values.redcap.config.database.auth.password.secretKeyRef.key }}
 
             command:
-            - |
-              sh -c /tmp/scripts/redcap-install.sh && \
-              sh -c /tmp/scripts/redcap-setup.sh && \
+            - >-
+              sh -c /tmp/scripts/redcap-install.sh
+              sh -c /tmp/scripts/redcap-setup.sh
               sh -c /tmp/scripts/redcap-config.sh
 
           volumeMounts:
