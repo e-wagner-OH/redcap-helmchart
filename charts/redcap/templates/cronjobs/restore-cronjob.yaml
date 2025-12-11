@@ -171,21 +171,21 @@ spec:
               sh -c /tmp/scripts/redcap-setup.sh &&
               sh -c /tmp/scripts/redcap-config.sh
 
-          volumeMounts:
-          - name: redcap-app
-            mountPath: /app/redcap
-          - name: database-conf
-            mountPath: /tmp/conf/database.php
-            subPath: database.php
-          - name: redcap-install-script
-            mountPath: /tmp/scripts/redcap-install.sh
-            subPath: redcap-install.sh
-          - name: redcap-setup-script
-            mountPath: /tmp/scripts/redcap-setup.sh
-            subPath: redcap-setup.sh
-          - name: redcap-config-script
-            mountPath: /tmp/scripts/redcap-config.sh
-            subPath: redcap-config.sh
+            volumeMounts:
+            - name: redcap-app
+              mountPath: /app/redcap
+            - name: database-conf
+              mountPath: /tmp/conf/database.php
+              subPath: database.php
+            - name: redcap-install-script
+              mountPath: /tmp/scripts/redcap-install.sh
+              subPath: redcap-install.sh
+            - name: redcap-setup-script
+              mountPath: /tmp/scripts/redcap-setup.sh
+              subPath: redcap-setup.sh
+            - name: redcap-config-script
+              mountPath: /tmp/scripts/redcap-config.sh
+              subPath: redcap-config.sh
 
           volumes: 
           - name: redcap-code
