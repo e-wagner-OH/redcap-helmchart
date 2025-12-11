@@ -488,7 +488,7 @@ restoreJob:
           # @section -- REDCap Restore Job's settings
           existingSecret: ""
 
-  file:
+  files:
     image:
       # -- Image repository for the REDCap application restore container.
       # @section -- REDCap Restore Job's settings
