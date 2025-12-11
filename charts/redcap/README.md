@@ -168,9 +168,6 @@ helm install redcap aphp-redcap/redcap -f ./examples/basic-install.yaml
 | restoreJob.imagePullSecrets | list | `[]` | ImagePullSecret used to pull the images for the restore pod's containers |
 | restoreJob.schedule | string | `"0 0 1 1 *"` | Schedule for the restore Cronjob. CronJob resources needs a valid schedule, but this one will never be used since it will always be suspended (see spec.suspend field). |
 | restoreJob.archiveName | string | `"redcap-backup.tar.gz"` | Name of the backup archive to restore. |
-| restoreJob.redcap.image.repository | string | `"busybox"` | Image repository for the REDCap application restore container. |
-| restoreJob.redcap.image.tag | string | `"1"` | Image tag for the REDCap application restore container. |
-| restoreJob.redcap.image.pullPolicy | string | `"Always"` | Image pullPolicy for the REDCap application restore container. |
 | restoreJob.downloader.image.repository | string | `"rclone/rclone"` | Image repository for the REDCap downloader container. |
 | restoreJob.downloader.image.tag | string | `"drime"` | Image tag for the REDCap downloader container. |
 | restoreJob.downloader.image.pullPolicy | string | `"Always"` | Image pullPolicy for the REDCap downloader container. |
@@ -181,6 +178,12 @@ helm install redcap aphp-redcap/redcap -f ./examples/basic-install.yaml
 | restoreJob.downloader.s3.config.auth.accessKeyID | string | `""` | AccessKeyID needed for authentication on the S3 bucket. |
 | restoreJob.downloader.s3.config.auth.secretAccessKey | string | `""` | SecretAccessKey needed for authentication on the S3 bucket. |
 | restoreJob.downloader.s3.config.auth.existingSecret | string | `""` | Reference to an existing secret holding the AccessKeyID and SecretAccessKey needed for authentication on the S3 bucket.    If set, overrides the AccessKeyID and SecretAccessKey values. |
+| restoreJob.file.image.repository | string | `"busybox"` | Image repository for the REDCap application restore container. |
+| restoreJob.file.image.tag | string | `"1"` | Image tag for the REDCap files application container. |
+| restoreJob.file.image.pullPolicy | string | `"Always"` | Image pullPolicy for the REDCap application restore container. |
+| restoreJob.redcap.image.repository | string | `"alpine/curl"` | Image repository for the REDCap application restore container. |
+| restoreJob.redcap.image.tag | string | `"8.12.1"` | Image tag for the REDCap application restore container. |
+| restoreJob.redcap.image.pullPolicy | string | `"Always"` | Image pullPolicy for the REDCap application restore container. |
 | restoreJob.resources | object | `{}` | Resources for backup job's pod. |
 
 ### REDCap Audit Log Shipper settings

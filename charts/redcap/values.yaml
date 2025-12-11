@@ -448,37 +448,6 @@ restoreJob:
   # -- Name of the backup archive to restore.
   # @section -- REDCap Restore Job's settings
   archiveName: "redcap-backup.tar.gz"
-  redcap:
-    image:
-      # -- Image repository for the REDCap application restore container.
-      # @section -- REDCap Restore Job's settings
-      repository: "busybox"
-      # -- Image tag for the REDCap application restore container.
-      # @section -- REDCap Restore Job's settings
-      tag: "1"
-      # -- Image pullPolicy for the REDCap application restore container.
-      # @section -- REDCap Restore Job's settings
-      pullPolicy: "Always"
-
-  database:
-    image:
-      # # -- Image repository for the REDCap database restore container.
-      # # @section -- REDCap Restore Job's settings
-      # repository: "bitnamilegacy/MariaDB"
-      # # -- Image yag for the REDCap application restore container.
-      # # @section -- REDCap Restore Job's settings
-      # tag: "9.3.0-debian-12-r1"
-      # # -- Image pullPolicy for the REDCap application restore container.
-      # # @section -- REDCap Restore Job's settings
-      # pullPolicy: "Always"
-      ## @param image.registry MariaDB image registry
-      registry: docker.io
-      ## @param image.repository MariaDB image repository
-      repository: mariadb
-      ## @param image.tag MariaDB image tag (immutable tags are recommended)
-      tag: "12.1.2@sha256:e1bcd6f85781f4a875abefb11c4166c1d79e4237c23de597bf0df81fec225b40"
-      ## @param image.pullPolicy MariaDB image pull policy
-      imagePullPolicy: Always
 
   downloader:
     image:
@@ -518,6 +487,50 @@ restoreJob:
           #    If set, overrides the AccessKeyID and SecretAccessKey values.
           # @section -- REDCap Restore Job's settings
           existingSecret: ""
+
+  file:
+    image:
+      # -- Image repository for the REDCap application restore container.
+      # @section -- REDCap Restore Job's settings
+      repository: "busybox"
+      # -- Image tag for the REDCap files application container.
+      # @section -- REDCap Restore Job's settings
+      tag: "1"
+      # -- Image pullPolicy for the REDCap application restore container.
+      # @section -- REDCap Restore Job's settings
+      pullPolicy: "Always"
+
+  database:
+    image:
+      # # -- Image repository for the REDCap database restore container.
+      # # @section -- REDCap Restore Job's settings
+      # repository: "bitnamilegacy/MariaDB"
+      # # -- Image yag for the REDCap application restore container.
+      # # @section -- REDCap Restore Job's settings
+      # tag: "9.3.0-debian-12-r1"
+      # # -- Image pullPolicy for the REDCap application restore container.
+      # # @section -- REDCap Restore Job's settings
+      # pullPolicy: "Always"
+      ## @param image.registry MariaDB image registry
+      registry: docker.io
+      ## @param image.repository MariaDB image repository
+      repository: mariadb
+      ## @param image.tag MariaDB image tag (immutable tags are recommended)
+      tag: "12.1.2@sha256:e1bcd6f85781f4a875abefb11c4166c1d79e4237c23de597bf0df81fec225b40"
+      ## @param image.pullPolicy MariaDB image pull policy
+      imagePullPolicy: Always
+
+  redcap:
+    image:
+      # -- Image repository for the REDCap application restore container.
+      # @section -- REDCap Restore Job's settings
+      repository: "alpine/curl"
+      # -- Image tag for the REDCap application restore container.
+      # @section -- REDCap Restore Job's settings
+      tag: "8.12.1"
+      # -- Image pullPolicy for the REDCap application restore container.
+      # @section -- REDCap Restore Job's settings
+      pullPolicy: "Always"
 
   # -- Resources for backup job's pod.
   # @section -- REDCap Restore Job's settings

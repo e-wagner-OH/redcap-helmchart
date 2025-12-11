@@ -73,8 +73,8 @@ spec:
               subPath: backup-download.sh
 
           - name: files-restore
-            image: "{{ .Values.restoreJob.redcap.image.repository }}:{{ .Values.restoreJob.redcap.image.tag }}"
-            imagePullPolicy: {{ .Values.restoreJob.redcap.image.pullPolicy }}
+            image: "{{ .Values.restoreJob.files.image.repository }}:{{ .Values.restoreJob.files.image.tag }}"
+            imagePullPolicy: {{ .Values.restoreJob.files.image.pullPolicy }}
             command: 
             - "sh"
             - "-c"
@@ -133,7 +133,7 @@ spec:
 
 
           containers:
-          - name: redcap-update
+          - name: redcap-restore
             image: "{{ .Values.restoreJob.redcap.image.repository }}:{{ .Values.restoreJob.redcap.image.tag }}"
             imagePullPolicy: {{ .Values.restoreJob.redcap.image.pullPolicy }}
             securityContext:
