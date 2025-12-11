@@ -188,7 +188,7 @@ spec:
               subPath: redcap-config.sh
 
           volumes: 
-          - name: redcap-code
+          - name: redcap-app
             persistentVolumeClaim:
               claimName: {{ .Release.Name }}-app-pvc
           - name: edocs 
@@ -206,7 +206,7 @@ spec:
           - name: database-conf
             configMap:
               name: {{ .Release.Name }}-database-conf
-          - name: init-install-script
+          - name: redcap-install-script
             configMap:
               name: {{ .Release.Name }}-init-install-script
               defaultMode: 0777
