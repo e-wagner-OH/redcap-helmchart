@@ -95,7 +95,6 @@ spec:
             - name: backup-data
               mountPath: /backup-data
 
-          containers:
           - name: db-restore
             image: "{{ .Values.restoreJob.database.image.repository }}:{{ .Values.restoreJob.database.image.tag }}"
             imagePullPolicy: {{ .Values.restoreJob.database.image.pullPolicy }}
@@ -132,6 +131,62 @@ spec:
             - name: backup-data
               mountPath: /backup-data
 
+
+          containers:
+          - name: redcap-update
+            image: "{{ .Values.restoreJob.redcap.image.repository }}:{{ .Values.restoreJob.redcap.image.tag }}"
+            imagePullPolicy: {{ .Values.restoreJob.redcap.image.pullPolicy }}
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              runAsUser: 2000
+              runAsGroup: 2000
+
+            env:
+            - name: XDG_CONFIG_HOME
+              value: "/var/run/secrets"
+            - name : REDCAP_VERSION
+              value: {{ .Values.redcap.install.version }}
+            - name : REDCAP_INSTALL_PATH
+              value: "/app/redcap"
+            - name: REDCAP_COMMUNITY_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ default (include "redcap.secrets.community.creds.name" .) .Values.redcap.install.communityAuth.existingSecret }}
+                  key: USERNAME
+            - name: REDCAP_COMMUNITY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ default (include "redcap.secrets.community.creds.name" .) .Values.redcap.install.communityAuth.existingSecret }}
+                  key: PASSWORD
+            - name: DB_PASSWD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ default (include "mariadb.secrets.password.name" .) .Values.redcap.config.database.auth.password.secretKeyRef.name }}
+                  key: {{ default (include "mariadb.secrets.password.key" .) .Values.redcap.config.database.auth.password.secretKeyRef.key }}
+
+            command:
+            - |
+              sh -c /tmp/scripts/redcap-install.sh && \
+              sh -c /tmp/scripts/redcap-setup.sh && \
+              sh -c /tmp/scripts/redcap-config.sh
+
+          volumeMounts:
+          - name: redcap-app
+            mountPath: /app/redcap
+          - name: database-conf
+            mountPath: /tmp/conf/database.php
+            subPath: database.php
+          - name: redcap-install-script
+            mountPath: /tmp/scripts/redcap-install.sh
+            subPath: redcap-install.sh
+          - name: redcap-setup-script
+            mountPath: /tmp/scripts/redcap-setup.sh
+            subPath: redcap-setup.sh
+          - name: redcap-config-script
+            mountPath: /tmp/scripts/redcap-config.sh
+            subPath: redcap-config.sh
+
           volumes: 
           - name: redcap-code
             persistentVolumeClaim:
@@ -148,6 +203,21 @@ spec:
           - name: rclone-conf
             secret:
               secretName: {{ include "redcap.secrets.restore.rclone.conf.name" . }}
+          - name: database-conf
+            configMap:
+              name: {{ .Release.Name }}-database-conf
+          - name: init-install-script
+            configMap:
+              name: {{ .Release.Name }}-init-install-script
+              defaultMode: 0777
+          - name: redcap-setup-script
+            configMap:
+              name: {{ .Release.Name }}-init-setup-script
+              defaultMode: 0777
+          - name: redcap-config-script
+            configMap:
+              name: {{ .Release.Name }}-init-config-script
+              defaultMode: 0777
 
 
           {{- with .Values.redcap.nodeSelector }}

@@ -50,8 +50,6 @@ spec:
           env:
           - name : REDCAP_INSTALL_PATH
             value: "/app/redcap"
-          - name : OVERRIDE_INSTALL
-            value: {{ .Values.redcap.install.override | toString | quote }}
           - name : REDCAP_VERSION
             value: {{ .Values.redcap.install.version }}
           - name: REDCAP_COMMUNITY_USERNAME
