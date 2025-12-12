@@ -130,11 +130,53 @@ spec:
             volumeMounts:
             - name: backup-data
               mountPath: /backup-data
+          
+          - name: init-download-redcap
+            image: "{{ .Values.restoreJob.redcap.image.repository }}:{{ .Values.restoreJob.redcap.image.tag }}"
+            imagePullPolicy: {{ .Values.redcap.install.image.pullPolicy }}
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              runAsUser: 2000
+              runAsGroup: 2000
+
+            env:
+            - name : REDCAP_INSTALL_PATH
+              value: "/app/redcap"
+            - name : REDCAP_VERSION
+              value: {{ .Values.redcap.install.version }}
+            - name: REDCAP_COMMUNITY_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ default (include "redcap.secrets.community.creds.name" .) .Values.redcap.install.communityAuth.existingSecret }}
+                  key: USERNAME
+            - name: REDCAP_COMMUNITY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ default (include "redcap.secrets.community.creds.name" .) .Values.redcap.install.communityAuth.existingSecret }}
+                  key: PASSWORD
+
+            command:
+            - "sh"
+            - "-c"
+            - "/home/curl_user/redcap-install.sh"
+
+            volumeMounts:
+            - name: redcap-archive-cache
+              mountPath: /tmp/redcap
+            - name: redcap-app
+              mountPath: /app/redcap
+            - name: database-conf
+              mountPath: /tmp/conf/database.php
+              subPath: database.php
+            - name: redcap-install-script
+              mountPath: /home/curl_user/redcap-install.sh
+              subPath: redcap-install.sh
 
 
           containers:
           - name: redcap-restore
-            image: "{{ .Values.restoreJob.redcap.image.repository }}:{{ .Values.restoreJob.redcap.image.tag }}"
+            image: "{{ .Values.redcap.image.repository }}:{{ .Values.redcap.image.tag }}"
             imagePullPolicy: {{ .Values.restoreJob.redcap.image.pullPolicy }}
             securityContext:
               allowPrivilegeEscalation: false
@@ -169,7 +211,6 @@ spec:
               - sh
               - -c
               - >
-                /tmp/scripts/redcap-install.sh &&
                 /tmp/scripts/redcap-setup.sh &&
                 /tmp/scripts/redcap-config.sh
 

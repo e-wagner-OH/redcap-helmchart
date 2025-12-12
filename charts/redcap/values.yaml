@@ -524,10 +524,10 @@ restoreJob:
     image:
       # -- Image repository for the REDCap application restore container.
       # @section -- REDCap Restore Job's settings
-      repository: "ghcr.io/aphp/redcap-httpd-shibd"
+      repository: "alpine/curl"
       # -- Image tag for the REDCap application restore container.
       # @section -- REDCap Restore Job's settings
-      tag: "1.2.0"
+      tag: "8.12.1"
       # -- Image pullPolicy for the REDCap application restore container.
       # @section -- REDCap Restore Job's settings
       pullPolicy: "Always"
