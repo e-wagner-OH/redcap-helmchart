@@ -58,7 +58,6 @@ update_database_config () {
 
     echo "[INFO] Injecting REDCap database configuration"
     cp -f /tmp/conf/database.php "${REDCAP_INSTALL_PATH}/database.php"
-
     echo "[INFO] REDCap Database configuration updated!"
 }
 
@@ -80,6 +79,11 @@ if  [ -n "$(find "$REDCAP_INSTALL_PATH" -mindepth 1 -maxdepth 1 -not -path "$RED
 
     if  [ "$REDCAP_VERSION_SANITIZED" -eq "$REDCAP_CURRENT_VERSION_SANITIZED" ]; then
         echo "[INFO] REDCap version ${REDCAP_VERSION} files are already present in ${REDCAP_INSTALL_PATH}. Skipping installation process."
+        if [ -f "${APP_INSTALL_PATH}/database.php" ]; then
+            echo "database.php founded"
+        else
+            update_database_config
+        fi
         exit 0
 
     elif  [ "$REDCAP_VERSION_SANITIZED" -gt "$REDCAP_CURRENT_VERSION_SANITIZED" ]; then
