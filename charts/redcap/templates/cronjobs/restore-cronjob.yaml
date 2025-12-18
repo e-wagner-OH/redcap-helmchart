@@ -169,8 +169,7 @@ spec:
               - sh
               - -c
               - >
-                /tmp/scripts/redcap-install.sh &&
-                /tmp/scripts/redcap-setup.sh
+                /tmp/scripts/redcap-install.sh
 
             volumeMounts:
             - name: redcap-archive-cache
@@ -183,9 +182,9 @@ spec:
             - name: redcap-install-script
               mountPath: /tmp/scripts/redcap-install.sh
               subPath: redcap-install.sh
-            - name: redcap-setup-script
-              mountPath: /tmp/scripts/redcap-setup.sh
-              subPath: redcap-setup.sh
+            # - name: redcap-setup-script
+            #   mountPath: /tmp/scripts/redcap-setup.sh
+            #   subPath: redcap-setup.sh
 
           volumes: 
           - name: redcap-archive-cache
