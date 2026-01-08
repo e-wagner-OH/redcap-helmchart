@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: {{ .Values.mariadb.config.existingConfigmap }}
 data: 
-{{ tpl (.Files.Glob "configuration/mariadb/my.cnf").AsConfig . | nindent 2 }}
+{{ tpl (.Files.Glob "configuration/mysql/my.cnf").AsConfig . | nindent 2 }}
