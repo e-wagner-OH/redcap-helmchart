@@ -316,7 +316,7 @@ mariadb:
   config:
     # -- Name of existing ConfigMap with MariaDB Primary configuration.
     # @section -- REDCap MariaDB Database settings
-    existingConfigmap: "redcap-database-config"
+    existingConfigMap: "redcap-database-config"
 
   
   podLabels:
