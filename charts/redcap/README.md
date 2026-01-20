@@ -130,7 +130,7 @@ helm install redcap aphp-redcap/redcap -f ./examples/basic-install.yaml
 | mariadb.auth.database | string | `"redcap"` | Name of the database automatically created at the first run, if `MariaDB.auth.createDatabase` has been set to `true` |
 | mariadb.auth.username | string | `"redcap"` | Name of the database user automatically created at the first run, if `MariaDB.auth.createDatabase` has been set to `true` |
 | mariadb.auth.password | string | `"Redcap*!"` | Name of the database user automatically created at the first run, if `MariaDB.auth.createDatabase` has been set to `true`    Not secure in production, use secret reference instead! |
-| mariadb.config.existingConfigmap | string | `"redcap-database-config"` | Name of existing ConfigMap with MariaDB Primary configuration. |
+| mariadb.config.existingConfigMap | string | `"redcap-database-config"` | Name of existing ConfigMap with MariaDB Primary configuration. |
 | mariadb.podLabels."app.kubernetes.io/role" | string | `"redcap-mariadb"` | Role to set for the networkPolicies. Not to be changed, unless you know exactly what you are doing! |
 | mariadb.service.port | int | `3306` | Port exposed by the MariaDB service. |
 | mariadb.persistence.storageClass | string | `"standard"` | StorageClass used for database persistence. |

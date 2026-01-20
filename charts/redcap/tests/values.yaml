@@ -73,7 +73,7 @@ redcap:
 mariadb:
   enabled: true
   primary:
-    existingConfigmap: "redcap-ext-qual-database-config"
+    existingConfigMap: "redcap-ext-qual-database-config"
     persistence: 
       annotations:
         helm.sh/resource-policy: keep

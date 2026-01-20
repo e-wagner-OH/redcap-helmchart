@@ -78,7 +78,7 @@ mariadb:
     username: redcap
     existingSecret: "redcap-prod-mariadb-passwd"
   primary:
-    existingConfigmap: "redcap-prod-database-config"
+    existingConfigMap: "redcap-prod-database-config"
     persistence: 
       annotations:
         helm.sh/resource-policy: keep
