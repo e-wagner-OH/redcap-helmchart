@@ -1,8 +1,8 @@
 <?php
 
 //********************************************************************************************************************
-// MYSQL DATABASE CONNECTION:
-// Replace the values inside the single quotes below with the values for your MySQL configuration. 
+// MariaDB DATABASE CONNECTION:
+// Replace the values inside the single quotes below with the values for your MariaDB configuration. 
 // If not using the default port 3306, then append a colon and port number to the hostname (e.g. $hostname = 'example.com:3307';).
 
 $hostname 	= '{{ .Values.redcap.config.database.auth.hostname }}';
@@ -31,7 +31,7 @@ $salt = {{ ternary (printf "%s" .Values.redcap.config.database.salt.value | squo
 //********************************************************************************************************************
 // DATA TRANSFER SERVICES (DTS):
 // If using REDCap DTS, uncomment the lines below and provide the database connection values for connecting to
-// the MySQL database containing the DTS tables (even if the same as the values above).
+// the MariaDB database containing the DTS tables (even if the same as the values above).
 
 // $dtsHostname 	= 'your_dts_host_name';
 // $dtsDb 			= 'your_dts_db_name';
