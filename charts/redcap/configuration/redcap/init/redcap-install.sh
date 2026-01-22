@@ -80,7 +80,7 @@ if  [ -n "$(find "$REDCAP_INSTALL_PATH" -mindepth 1 -maxdepth 1 -not -path "$RED
     if  [ "$REDCAP_VERSION_SANITIZED" -eq "$REDCAP_CURRENT_VERSION_SANITIZED" ]; then
         echo "[INFO] REDCap version ${REDCAP_VERSION} files are already present in ${REDCAP_INSTALL_PATH}. Skipping installation process."
         if [ -f "${APP_INSTALL_PATH}/database.php" ]; then
-            echo "database.php founded"
+            echo "[INFO] database.php founded"
         else
             update_database_config
         fi

@@ -263,21 +263,19 @@ redcap:
 
 # REDCap MariaDB Database settings
 # @default -- Settings for a standalone MariaDB deployment compatible with REDCap.
-#             See original documentation @ https://github.com/bitnami/charts/tree/main/bitnami/MariaDB
+#             See original documentation @ https://github.com/CloudPirates-io/helm-charts/tree/main/charts/mariadb
 # @section -- REDCap MariaDB Database settings
 mariadb:
 
   image:
-    # # -- Image repository for MariaDB image.
-    # # @section -- REDCap MariaDB Database settings
-    # repository: bitnamilegacy/MariaDB
-    # # -- Image tag for MariaDB image.
-    # # @section -- REDCap MariaDB Database settings
-    # tag: 9.4.0-debian-12-r1
-      ## @param image.registry MariaDB image registry
+    # -- Image repository for MariaDB image.
+    # @section -- REDCap MariaDB Database settings
+    ## @param image.registry MariaDB image registry
     registry: docker.io
     ## @param image.repository MariaDB image repository
     repository: mariadb
+    # -- Image tag for MariaDB image.
+    # @section -- REDCap MariaDB Database settings
     ## @param image.tag MariaDB image tag (immutable tags are recommended)
     tag: "12.1.2@sha256:e1bcd6f85781f4a875abefb11c4166c1d79e4237c23de597bf0df81fec225b40"
     ## @param image.pullPolicy MariaDB image pull policy
@@ -371,19 +369,14 @@ backupJob:
 
   database:
     image:
-      # # -- Image repository for the REDCap database backup container.
-      # # @section -- REDCap Backup Job's settings
-      # repository: "bitnamilegacy/MariaDB"
-      # # -- Image tag for the REDCap database backup container.
-      # # @section -- REDCap Backup Job's settings
-      # tag: "9.3.0-debian-12-r1"
-      # # -- Image pullPolicy for the REDCap database backup container.
-      # # @section -- REDCap Backup Job's settings
-      # pullPolicy: "Always"
-        ## @param image.registry MariaDB image registry
+      # -- Image repository for MariaDB image.
+      # @section -- REDCap MariaDB Database settings
+      ## @param image.registry MariaDB image registry
       registry: docker.io
       ## @param image.repository MariaDB image repository
       repository: mariadb
+      # -- Image tag for MariaDB image.
+      # @section -- REDCap MariaDB Database settings
       ## @param image.tag MariaDB image tag (immutable tags are recommended)
       tag: "12.1.2@sha256:e1bcd6f85781f4a875abefb11c4166c1d79e4237c23de597bf0df81fec225b40"
       ## @param image.pullPolicy MariaDB image pull policy
@@ -502,19 +495,14 @@ restoreJob:
 
   database:
     image:
-      # # -- Image repository for the REDCap database restore container.
-      # # @section -- REDCap Restore Job's settings
-      # repository: "bitnamilegacy/MariaDB"
-      # # -- Image yag for the REDCap application restore container.
-      # # @section -- REDCap Restore Job's settings
-      # tag: "9.3.0-debian-12-r1"
-      # # -- Image pullPolicy for the REDCap application restore container.
-      # # @section -- REDCap Restore Job's settings
-      # pullPolicy: "Always"
+      # -- Image repository for MariaDB image.
+      # @section -- REDCap MariaDB Database settings
       ## @param image.registry MariaDB image registry
       registry: docker.io
       ## @param image.repository MariaDB image repository
       repository: mariadb
+      # -- Image tag for MariaDB image.
+      # @section -- REDCap MariaDB Database settings
       ## @param image.tag MariaDB image tag (immutable tags are recommended)
       tag: "12.1.2@sha256:e1bcd6f85781f4a875abefb11c4166c1d79e4237c23de597bf0df81fec225b40"
       ## @param image.pullPolicy MariaDB image pull policy

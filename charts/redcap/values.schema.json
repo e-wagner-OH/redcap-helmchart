@@ -1021,7 +1021,7 @@
                 "enabled": {
                     "type": "boolean"
                 },
-                "file": {
+                "files": {
                     "type": "object",
                     "properties": {
                         "image": {

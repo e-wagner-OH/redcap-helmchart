@@ -1,7 +1,7 @@
 This software contains the following dependencies developed by Broadcom :
 
 - Helm Charts:
-  - mariadb : https://github.com/bitnami/charts/tree/main/bitnami/mariadb
+  - mariadb : https://github.com/CloudPirates-io/helm-charts/tree/main/charts/mariadb
   - logstash : https://github.com/bitnami/charts/tree/main/bitnami/logstash
 
 Those dependencies are present in the "bitnami/charts" github repository provided by Broadcom under the Apache 2.0 license, 
