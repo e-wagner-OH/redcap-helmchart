@@ -11,7 +11,7 @@ httpd:
     repository: "ghcr.io/aphp/redcap-httpd-shibd"
     # -- Image tag for Apache HTTPd.
     # @section -- HTTPd module settings
-    tag: "1.2.0"
+    tag: "1.2.1"
     # -- PullPolicy for Apache HTTPd's image.
     # @section -- HTTPd module settings
     pullPolicy: "Always"
@@ -122,7 +122,7 @@ redcap:
     pullPolicy: "Always"
     # -- Tag for REDCap PHP-FPM Image.
     # @section -- REDCap settings
-    tag: "1.2.0"
+    tag: "1.2.1"
 
   # -- Add additional init containers to the PHP-FPM container hosting the REDCap application.
   # @section -- REDCap settings

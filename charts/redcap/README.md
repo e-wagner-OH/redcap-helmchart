@@ -49,7 +49,7 @@ helm install redcap aphp-redcap/redcap -f ./examples/basic-install.yaml
 |-----|------|---------|-------------|
 | httpd.enabled | bool | `true` | If `true`, activates the deployment of the Apache HTTPd proxy. |
 | httpd.image.repository | string | `"ghcr.io/aphp/redcap-httpd-shibd"` | Image repository for Apache HTTPd. |
-| httpd.image.tag | string | `"1.2.0"` | Image tag for Apache HTTPd. |
+| httpd.image.tag | string | `"1.2.1"` | Image tag for Apache HTTPd. |
 | httpd.image.pullPolicy | string | `"Always"` | PullPolicy for Apache HTTPd's image. |
 | httpd.tls.enabled | bool | `false` | If `true` activates TLS termination on the Apache HTTPd proxy. |
 | httpd.tls.certificate.existingSecret | string | `""` | Name of the existing Secret holding the certificate for the TLS termination. The secret must be of type `tls`. |
@@ -82,7 +82,7 @@ helm install redcap aphp-redcap/redcap -f ./examples/basic-install.yaml
 | redcap.install.overrideInstallContainer | list | `[]` | Overrides the initContainers that downloads the REDCap application package. |
 | redcap.image.repository | string | `"ghcr.io/aphp/redcap-php-fpm"` | Image repository for REDCap PHP-FPM Image. |
 | redcap.image.pullPolicy | string | `"Always"` | PullPolicy for REDCap PHP-FPM Image. |
-| redcap.image.tag | string | `"1.2.0"` | Tag for REDCap PHP-FPM Image. |
+| redcap.image.tag | string | `"1.2.1"` | Tag for REDCap PHP-FPM Image. |
 | redcap.extraInitContainers | list | `[]` | Add additional init containers to the PHP-FPM container hosting the REDCap application. |
 | redcap.extraContainers | list | `[]` | Add additional containers to the PHP-FPM container hosting the REDCap application. |
 | redcap.extraVolumes | list | `[]` | Add additional volumes to the PHP-FPM container hosting the REDCap application. |
