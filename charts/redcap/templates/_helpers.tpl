@@ -235,12 +235,12 @@ Secrets names
 {{ .Release.Name }}-db-audit-credentials
 {{- end }}
 
-{{- define "mysql.secrets.password.name" -}}
-{{ .Release.Name }}-mysql
+{{- define "mariadb.secrets.password.name" -}}
+{{ .Release.Name }}-mariadb
 {{- end }}
 
-{{- define "mysql.secrets.password.key" -}}
-mysql-password
+{{- define "mariadb.secrets.password.key" -}}
+mariadb-password
 {{- end }}
 
 {{/*
@@ -276,9 +276,14 @@ Create the name of the service to use
 {{ include "redcap.fullname" . }}-svc
 {{- end }}
 
-{{/*
-Create the name of the service to use
-*/}}
+http://{{ include `httpd.serviceName` . }}:1080
 {{- define "httpd.serviceName" -}}
 {{ include "httpd.fullname" . }}-svc
+{{- end }}
+
+{{/*
+Create the url that redcap will use as redcap_base_url
+*/}}
+{{- define "httpd.externalDomain" -}}
+{{- printf "%s" ( .Values.redcap.config.externalURL | urlParse ).host  | splitList ":" | first }}
 {{- end }}

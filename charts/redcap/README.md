@@ -1,6 +1,6 @@
 # redcap
 
-![Version: 1.4.5](https://img.shields.io/badge/Version-1.4.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 14.5.25](https://img.shields.io/badge/AppVersion-14.5.25-informational?style=flat-square)
+![Version: 1.5.0](https://img.shields.io/badge/Version-1.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 15.0.27](https://img.shields.io/badge/AppVersion-15.0.27-informational?style=flat-square)
 
 A Helm chart to deploy REDCap on a Kubernetes cluster.
 
@@ -23,7 +23,7 @@ Kubernetes: `>= 1.24.0-0`
 | Repository | Name | Version |
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | audit(logstash) | 7.0.4 |
-| https://charts.bitnami.com/bitnami | mysql | 13.0.2 |
+| oci://registry-1.docker.io/cloudpirates | mariadb | 0.8.0 |
 
 ## Deployment Architecture
 
@@ -49,7 +49,7 @@ helm install redcap aphp-redcap/redcap -f ./examples/basic-install.yaml
 |-----|------|---------|-------------|
 | httpd.enabled | bool | `true` | If `true`, activates the deployment of the Apache HTTPd proxy. |
 | httpd.image.repository | string | `"ghcr.io/aphp/redcap-httpd-shibd"` | Image repository for Apache HTTPd. |
-| httpd.image.tag | string | `"1.2.0"` | Image tag for Apache HTTPd. |
+| httpd.image.tag | string | `"1.2.1"` | Image tag for Apache HTTPd. |
 | httpd.image.pullPolicy | string | `"Always"` | PullPolicy for Apache HTTPd's image. |
 | httpd.tls.enabled | bool | `false` | If `true` activates TLS termination on the Apache HTTPd proxy. |
 | httpd.tls.certificate.existingSecret | string | `""` | Name of the existing Secret holding the certificate for the TLS termination. The secret must be of type `tls`. |
@@ -82,12 +82,12 @@ helm install redcap aphp-redcap/redcap -f ./examples/basic-install.yaml
 | redcap.install.overrideInstallContainer | list | `[]` | Overrides the initContainers that downloads the REDCap application package. |
 | redcap.image.repository | string | `"ghcr.io/aphp/redcap-php-fpm"` | Image repository for REDCap PHP-FPM Image. |
 | redcap.image.pullPolicy | string | `"Always"` | PullPolicy for REDCap PHP-FPM Image. |
-| redcap.image.tag | string | `"1.2.0"` | Tag for REDCap PHP-FPM Image. |
+| redcap.image.tag | string | `"1.2.1"` | Tag for REDCap PHP-FPM Image. |
 | redcap.extraInitContainers | list | `[]` | Add additional init containers to the PHP-FPM container hosting the REDCap application. |
 | redcap.extraContainers | list | `[]` | Add additional containers to the PHP-FPM container hosting the REDCap application. |
 | redcap.extraVolumes | list | `[]` | Add additional volumes to the PHP-FPM container hosting the REDCap application. |
 | redcap.config.logAllErrors | string | `"FALSE"` | If set to `true`, will log all the errors on the stdout (NOT RECOMMENDED IN PRODUCTION). |
-| redcap.config.externalURL | string | `"http://localhost/"` | The URL on which the application is exposed (useful if the application is behind a reverse-proxy). |
+| redcap.config.externalURL | string | `"http://localhost"` | The URL on which the application is exposed (useful if the application is behind a reverse-proxy). |
 | redcap.config.institutionName | string | `"REDCap Local Institution"` | The name of the institution that is presented to the users. |
 | redcap.config.organizationName | string | `"REDCap Local Organization"` | The name of the origanization inside the institution that is presented to the users. |
 | redcap.config.adminName | string | `"REDCap Local Admin"` | The name of the administrator that is presented to the users. |
@@ -98,7 +98,7 @@ helm install redcap aphp-redcap/redcap -f ./examples/basic-install.yaml
 | redcap.config.database.salt.value | string | `"UjtNfDs2ELs2v6p"` | The value of the salt used by the application to cypher sensitive data. |
 | redcap.config.database.salt.secretKeyRef.name | string | `""` | The name of the secret holding the value of the salt used by the application to cypher sensitive data.    If set, the value of that secret will override the `redcap.config.database.salt.value` value. |
 | redcap.config.database.salt.secretKeyRef.key | string | `""` | The key of the secret holding the value of the salt used by the application to cypher sensitive data.    If set, the value of that secret will override the `redcap.config.database.salt.value` value. |
-| redcap.config.database.auth.hostname | string | `"redcap-mysql"` | The hostname of REDCap's database instance. |
+| redcap.config.database.auth.hostname | string | `"redcap-mariadb"` | The hostname of REDCap's database instance. |
 | redcap.config.database.auth.databaseName | string | `"redcap"` | The name of REDCAP's database. |
 | redcap.config.database.auth.username | string | `"redcap"` | The username used to connect to REDCAP's database. |
 | redcap.config.database.auth.password.value | string | `""` | The password used to connect to REDCAP's database, as a clear string. Don't use the option for a production-grade deployment,     refer to an external secret instead! |
@@ -110,7 +110,7 @@ helm install redcap aphp-redcap/redcap -f ./examples/basic-install.yaml
 | redcap.config.mail.auth.starttls | bool | `false` | If `true`, will use StartTLS for the connection to the mail server. |
 | redcap.config.mail.auth.from | string | `""` | The sender name that will display on mails send by REDCap. |
 | redcap.config.mail.auth.username | string | `""` | The username used to connect to the mail server. |
-| redcap.config.mail.auth.password.value | string | `""` | The password used to connect to the mail server. |
+| redcap.config.mail.auth.password.value | string | `"Redcap*!"` | The password used to connect to the mail server. |
 | redcap.config.mail.auth.password.existingSecret | string | `""` | Reference to an existing secret holding the password used to connect to the mail server.    If set, the value of that secret will override the `redcap.config.mail.auth.password.value` value. |
 | redcap.replicaCount | int | `1` | The number of replicas for REDCap's deployment. |
 | redcap.resources | object | `{}` | The resource request/limits for REDCap's deployment. |
@@ -118,25 +118,24 @@ helm install redcap aphp-redcap/redcap -f ./examples/basic-install.yaml
 | redcap.tolerations | list | `[]` | The tolerations for REDCap's deployment. |
 | redcap.affinity | object | `{}` | The affinities for REDCap's deployment. |
 
-### REDCap MySQL Database settings
+### REDCap MariaDB Database settings
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| mysql.fullnameOverride | string | `"redcap-mysql"` | Override of the full name of the MySQL Database deployment.    Impacts the name of the services REDCap will use to connect to the Database. |
-| mysql.enabled | bool | `true` | If set to `true`, enables the deployment of MySQL as REDCap's database. |
-| mysql.architecture | string | `"standalone"` | Deployment type for the database, standalone or replicated. |
-| mysql.initdbScriptsConfigMap | string | `""` | Name of a configmap holding an SQL script to initialize the database with. |
-| mysql.networkPolicy.enabled | bool | `true` | Enable creation of NetworkPolicy resources |
-| mysql.auth.createDatabase | bool | `true` | Automatically create a database at the first run. |
-| mysql.auth.database | string | `"redcap"` | Name of the database automatically created at the first run, if `mysql.auth.createDatabase` has been set to `true` |
-| mysql.auth.username | string | `"redcap"` | Name of the database user automatically created at the first run, if `mysql.auth.createDatabase` has been set to `true` |
-| mysql.auth.password | string | `"Redcap*!"` | Name of the database user automatically created at the first run, if `mysql.auth.createDatabase` has been set to `true`    Not secure in production, use secret reference instead! |
-| mysql.primary.existingConfigmap | string | `"redcap-database-config"` | Name of existing ConfigMap with MySQL Primary configuration. |
-| mysql.primary.podLabels."app.kubernetes.io/role" | string | `"redcap-mysql"` | Role to set for the networkPolicies. Not to be changed, unless you know exactly what you are doing! |
-| mysql.primary.service.port.mysql | int | `3306` | Port exposed by the MySQL service. |
-| mysql.primary.persistence.storageClass | string | `"standard"` | StorageClass used for database persistence. |
-| mysql.primary.persistence.accessModes | list | `["ReadWriteOnce"]` | AccessMode used for database persistence. |
-| mysql.primary.persistence.size | string | `"10G"` | Size of the storage used for database persistence. |
+| mariadb.fullnameOverride | string | `"redcap-mariadb"` | Override of the full name of the MariaDB Database deployment.    Impacts the name of the services REDCap will use to connect to the Database. |
+| mariadb.enabled | bool | `true` | If set to `true`, enables the deployment of MariaDB as REDCap's database. |
+| mariadb.networkPolicy.enabled | bool | `true` | Enable creation of NetworkPolicy resources |
+| mariadb.auth.enabled | bool | `true` | Enbled authentification system in mariadb. |
+| mariadb.auth.createDatabase | bool | `true` | Automatically create a database at the first run. |
+| mariadb.auth.database | string | `"redcap"` | Name of the database automatically created at the first run, if `MariaDB.auth.createDatabase` has been set to `true` |
+| mariadb.auth.username | string | `"redcap"` | Name of the database user automatically created at the first run, if `MariaDB.auth.createDatabase` has been set to `true` |
+| mariadb.auth.password | string | `"Redcap*!"` | Name of the database user automatically created at the first run, if `MariaDB.auth.createDatabase` has been set to `true`    Not secure in production, use secret reference instead! |
+| mariadb.config.existingConfigMap | string | `"redcap-database-config"` | Name of existing ConfigMap with MariaDB Primary configuration. |
+| mariadb.podLabels."app.kubernetes.io/role" | string | `"redcap-mariadb"` | Role to set for the networkPolicies. Not to be changed, unless you know exactly what you are doing! |
+| mariadb.service.port | int | `3306` | Port exposed by the MariaDB service. |
+| mariadb.persistence.storageClass | string | `"standard"` | StorageClass used for database persistence. |
+| mariadb.persistence.accessModes | list | `["ReadWriteOnce"]` | AccessMode used for database persistence. |
+| mariadb.persistence.size | string | `"10G"` | Size of the storage used for database persistence. |
 
 ### REDCap Backup Job's settings
 
@@ -149,11 +148,8 @@ helm install redcap aphp-redcap/redcap -f ./examples/basic-install.yaml
 | backupJob.redcap.image.repository | string | `"busybox"` | Image repository for the REDCap application backup container. |
 | backupJob.redcap.image.tag | string | `"1"` | Image tag for the REDCap application backup container. |
 | backupJob.redcap.image.pullPolicy | string | `"Always"` | Image pullPolicy for the REDCap application backup container. |
-| backupJob.database.image.repository | string | `"bitnami/mysql"` | Image repository for the REDCap database backup container. |
-| backupJob.database.image.tag | string | `"9.3.0-debian-12-r1"` | Image tag for the REDCap database backup container. |
-| backupJob.database.image.pullPolicy | string | `"Always"` | Image pullPolicy for the REDCap database backup container. |
-| backupJob.uploader.image.repository | string | `"bitnami/rclone"` | Image repository for the REDCap backup uploader container. |
-| backupJob.uploader.image.tag | string | `"1.69.3"` | Image tag for the REDCap backup uploader container. |
+| backupJob.uploader.image.repository | string | `"rclone/rclone"` | Image repository for the REDCap backup uploader container. |
+| backupJob.uploader.image.tag | string | `"drime"` | Image tag for the REDCap backup uploader container. |
 | backupJob.uploader.image.pullPolicy | string | `"Always"` | Image pullPolicy for the REDCap backup uploader container. |
 | backupJob.uploader.s3.backupPath | string | `"redcap-backup"` | Path of the REDcap backup archive on the S3 bucket. |
 | backupJob.uploader.s3.config.region | string | `""` | Region of the S3 bucket. |
@@ -172,14 +168,8 @@ helm install redcap aphp-redcap/redcap -f ./examples/basic-install.yaml
 | restoreJob.imagePullSecrets | list | `[]` | ImagePullSecret used to pull the images for the restore pod's containers |
 | restoreJob.schedule | string | `"0 0 1 1 *"` | Schedule for the restore Cronjob. CronJob resources needs a valid schedule, but this one will never be used since it will always be suspended (see spec.suspend field). |
 | restoreJob.archiveName | string | `"redcap-backup.tar.gz"` | Name of the backup archive to restore. |
-| restoreJob.redcap.image.repository | string | `"busybox"` | Image repository for the REDCap application restore container. |
-| restoreJob.redcap.image.tag | string | `"1"` | Image tag for the REDCap application restore container. |
-| restoreJob.redcap.image.pullPolicy | string | `"Always"` | Image pullPolicy for the REDCap application restore container. |
-| restoreJob.database.image.repository | string | `"bitnami/mysql"` | Image repository for the REDCap database restore container. |
-| restoreJob.database.image.tag | string | `"9.3.0-debian-12-r1"` | Image yag for the REDCap application restore container. |
-| restoreJob.database.image.pullPolicy | string | `"Always"` | Image pullPolicy for the REDCap application restore container. |
-| restoreJob.downloader.image.repository | string | `"bitnami/rclone"` | Image repository for the REDCap downloader container. |
-| restoreJob.downloader.image.tag | string | `"1.69.3"` | Image tag for the REDCap downloader container. |
+| restoreJob.downloader.image.repository | string | `"rclone/rclone"` | Image repository for the REDCap downloader container. |
+| restoreJob.downloader.image.tag | string | `"drime"` | Image tag for the REDCap downloader container. |
 | restoreJob.downloader.image.pullPolicy | string | `"Always"` | Image pullPolicy for the REDCap downloader container. |
 | restoreJob.downloader.s3.backupPath | string | `"redcap-backup"` | Path of the REDcap backup archive on the S3 bucket. |
 | restoreJob.downloader.s3.config.region | string | `""` | Region of the S3 bucket. |
@@ -188,6 +178,12 @@ helm install redcap aphp-redcap/redcap -f ./examples/basic-install.yaml
 | restoreJob.downloader.s3.config.auth.accessKeyID | string | `""` | AccessKeyID needed for authentication on the S3 bucket. |
 | restoreJob.downloader.s3.config.auth.secretAccessKey | string | `""` | SecretAccessKey needed for authentication on the S3 bucket. |
 | restoreJob.downloader.s3.config.auth.existingSecret | string | `""` | Reference to an existing secret holding the AccessKeyID and SecretAccessKey needed for authentication on the S3 bucket.    If set, overrides the AccessKeyID and SecretAccessKey values. |
+| restoreJob.file.image.repository | string | `"busybox"` | Image repository for the REDCap application restore container. |
+| restoreJob.file.image.tag | string | `"1"` | Image tag for the REDCap files application container. |
+| restoreJob.file.image.pullPolicy | string | `"Always"` | Image pullPolicy for the REDCap application restore container. |
+| restoreJob.redcap.image.repository | string | `"alpine/curl"` | Image repository for the REDCap application restore container. |
+| restoreJob.redcap.image.tag | string | `"8.12.1"` | Image tag for the REDCap application restore container. |
+| restoreJob.redcap.image.pullPolicy | string | `"Always"` | Image pullPolicy for the REDCap application restore container. |
 | restoreJob.resources | object | `{}` | Resources for backup job's pod. |
 
 ### REDCap Audit Log Shipper settings
@@ -195,18 +191,21 @@ helm install redcap aphp-redcap/redcap -f ./examples/basic-install.yaml
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | audit.enabled | bool | `false` | If set to `true`, enables the audit log-shipping solution. |
+| audit.global.security.allowInsecureImages | bool | `true` | Set to true to enable bitnami charts to use insecure images like bitmani legacy images. |
+| audit.image.repository | string | `"bitnamilegacy/logstash"` | Image repository for Logstash. |
+| audit.image.tag | string | `"9.1.2-debian-12-r0"` | Image tag for Logstash. |
 | audit.podLabels."app.kubernetes.io/role" | string | `"redcap-audit"` | Role to set for the networkPolicies. Not to be changed, unless you know exactly what you are doing! |
-| audit.initContainers[0] | object | A simple container to download the jar JDBC driver on a volume shared with Logstash. | Init container in charge of downloading the JDBC driver needed to connect to the MySQL database. |
+| audit.initContainers[0] | object | A simple container to download the jar JDBC driver on a volume shared with Logstash. | Init container in charge of downloading the JDBC driver needed to connect to the MariaDB database. |
 | audit.initContainers[0].image | string | `"alpine:3.21.3"` | Image used for the pod downloading the driver. |
 | audit.initContainers[0].imagePullPolicy | string | `"Always"` | Image pullPolicy used for the pod downloading the driver. |
 | audit.initContainers[0].env[0] | object | URL of the JDBC driver to download. | Env var to set the URL of the JDBC driver to download. |
-| audit.initContainers[0].env[0].value | string | `"https://downloads.mysql.com/archives/get/p/3/file/mysql-connector-j-8.4.0.tar.gz"` | URL of the JDBC driver to download. |
+| audit.initContainers[0].env[0].value | string | `"https://downloads.MariaDB.com/archives/get/p/3/file/MariaDB-connector-j-8.4.0.tar.gz"` | URL of the JDBC driver to download. |
 | audit.initContainers[0].command | list | Using `wget` do download the driver, and moving it to the shared persistent volume. | Command to be run to download and extract the JDBC driver. |
 | audit.initContainers[0].volumeMounts[0] | object | Mounted to `/driver` | Definition of the volumeMount used to persist the JDBC driver. |
 | audit.initContainers[0].volumeMounts[0].mountPath | string | `"/driver"` | Mount path of the volume used to persist the JDBC driver. |
 | audit.enableMultiplePipelines | bool | `true` | If set to `true`, allows the use of multiple pipelines. Needed for audit concurrent pipelines for performance reasons. |
-| audit.existingConfiguration | string | `"redcap-mysql-audit-logstash-pipeline"` | Name of an existing ConfigMap holding the pipeline(s)'s configuration. |
-| audit.extraEnvVars[0] | object | Empty external secret reference to REDCap DB password | Extra environment variables related to REDCap MySQL DB's password. |
+| audit.existingConfiguration | string | `"redcap-mariadb-audit-logstash-pipeline"` | Name of an existing ConfigMap holding the pipeline(s)'s configuration. |
+| audit.extraEnvVars[0] | object | Empty external secret reference to REDCap DB password | Extra environment variables related to REDCap MariaDB DB's password. |
 | audit.extraEnvVars[1] | object | Empty external secret reference to the API token to reach the audit stack API | Extra environment variables related to the API token to reach the audit stack API. |
 | audit.persistence.enabled | bool | `true` | If set to `true`, enables persistence for Logstash. Useful for disaster recovery purposes, as the pipeline(s)'s cache is stored persisted by Logstash. |
 | audit.persistence.storageClass | string | `"standard"` | Storage class used for Logstash's persistence. |
@@ -300,7 +299,21 @@ helm install redcap aphp-redcap/redcap -f ./examples/basic-install.yaml
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| redcap.config.database.auth.password | object | `{"secretKeyRef":{"key":"","name":""},"value":""}` | The password used to connect to REDCAP's database. Automatically retrieved from the default mysql secret name if you enbaled    the MySQL database embedded in this chart. If you specified a reference to an secret for your MySQL database password, you     have to set it here also, in the `secretKeyRef` section. |
+| redcap.config.database.auth.password | object | `{"secretKeyRef":{"key":"","name":""},"value":""}` | The password used to connect to REDCAP's database. Automatically retrieved from the default MariaDB secret name if you enbaled    the MariaDB database embedded in this chart. If you specified a reference to an secret for your MariaDB database password, you     have to set it here also, in the `secretKeyRef` section. |
+| mariadb.image.registry | string | `"docker.io"` |  |
+| mariadb.image.repository | string | `"mariadb"` |  |
+| mariadb.image.tag | string | `"12.1.2@sha256:e1bcd6f85781f4a875abefb11c4166c1d79e4237c23de597bf0df81fec225b40"` |  |
+| mariadb.image.imagePullPolicy | string | `"Always"` |  |
+| backupJob.database.image.registry | string | `"docker.io"` |  |
+| backupJob.database.image.repository | string | `"mariadb"` |  |
+| backupJob.database.image.tag | string | `"12.1.2@sha256:e1bcd6f85781f4a875abefb11c4166c1d79e4237c23de597bf0df81fec225b40"` |  |
+| backupJob.database.image.imagePullPolicy | string | `"Always"` |  |
+| restoreJob.database.image.registry | string | `"docker.io"` |  |
+| restoreJob.database.image.repository | string | `"mariadb"` |  |
+| restoreJob.database.image.tag | string | `"12.1.2@sha256:e1bcd6f85781f4a875abefb11c4166c1d79e4237c23de597bf0df81fec225b40"` |  |
+| restoreJob.database.image.imagePullPolicy | string | `"Always"` |  |
 | persistence.app.annotations."helm.sh/resource-policy" | string | `"keep"` |  |
 | persistence.modules.annotations."helm.sh/resource-policy" | string | `"keep"` |  |
 
+----------------------------------------------
+Autogenerated from chart metadata using [helm-docs v1.14.2](https://github.com/norwoodj/helm-docs/releases/v1.14.2)

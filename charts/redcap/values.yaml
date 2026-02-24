@@ -11,7 +11,7 @@ httpd:
     repository: "ghcr.io/aphp/redcap-httpd-shibd"
     # -- Image tag for Apache HTTPd.
     # @section -- HTTPd module settings
-    tag: "1.2.0"
+    tag: "1.2.1"
     # -- PullPolicy for Apache HTTPd's image.
     # @section -- HTTPd module settings
     pullPolicy: "Always"
@@ -122,7 +122,7 @@ redcap:
     pullPolicy: "Always"
     # -- Tag for REDCap PHP-FPM Image.
     # @section -- REDCap settings
-    tag: "1.2.0"
+    tag: "1.2.1"
 
   # -- Add additional init containers to the PHP-FPM container hosting the REDCap application.
   # @section -- REDCap settings
@@ -142,7 +142,7 @@ redcap:
     logAllErrors: "FALSE"
     # -- The URL on which the application is exposed (useful if the application is behind a reverse-proxy).
     # @section -- REDCap settings
-    externalURL: "http://localhost/"
+    externalURL: "http://localhost"
     # -- The name of the institution that is presented to the users.
     # @section -- REDCap settings
     institutionName: "REDCap Local Institution"
@@ -190,15 +190,15 @@ redcap:
       auth:
         # -- The hostname of REDCap's database instance.
         # @section -- REDCap settings
-        hostname: "redcap-mysql"
+        hostname: "redcap-mariadb"
         # -- The name of REDCAP's database.
         # @section -- REDCap settings
         databaseName: "redcap"
         # -- The username used to connect to REDCAP's database.
         # @section -- REDCap settings
         username: "redcap"
-          # -- The password used to connect to REDCAP's database. Automatically retrieved from the default mysql secret name if you enbaled
-          #    the MySQL database embedded in this chart. If you specified a reference to an secret for your MySQL database password, you 
+          # -- The password used to connect to REDCAP's database. Automatically retrieved from the default MariaDB secret name if you enbaled
+          #    the MariaDB database embedded in this chart. If you specified a reference to an secret for your MariaDB database password, you 
           #    have to set it here also, in the `secretKeyRef` section.
         password:
           # -- The password used to connect to REDCAP's database, as a clear string. Don't use the option for a production-grade deployment, 
@@ -238,7 +238,7 @@ redcap:
         password:
         # -- The password used to connect to the mail server.
         # @section -- REDCap settings
-          value: ""
+          value: "Redcap*!"
           # -- Reference to an existing secret holding the password used to connect to the mail server.
           #    If set, the value of that secret will override the `redcap.config.mail.auth.password.value` value.
           # @section -- REDCap settings
@@ -261,71 +261,83 @@ redcap:
   affinity: {}
 
 
-# REDCap MySQL Database settings
-# @default -- Settings for a standalone MySQL deployment compatible with REDCap.
-#             See original documentation @ https://github.com/bitnami/charts/tree/main/bitnami/mysql
-# @section -- REDCap MySQL Database settings
-mysql:
-  # -- Override of the full name of the MySQL Database deployment.
+# REDCap MariaDB Database settings
+# @default -- Settings for a standalone MariaDB deployment compatible with REDCap.
+#             See original documentation @ https://github.com/CloudPirates-io/helm-charts/tree/main/charts/mariadb
+# @section -- REDCap MariaDB Database settings
+mariadb:
+
+  image:
+    # -- Image repository for MariaDB image.
+    # @section -- REDCap MariaDB Database settings
+    ## @param image.registry MariaDB image registry
+    registry: docker.io
+    ## @param image.repository MariaDB image repository
+    repository: mariadb
+    # -- Image tag for MariaDB image.
+    # @section -- REDCap MariaDB Database settings
+    ## @param image.tag MariaDB image tag (immutable tags are recommended)
+    tag: "12.1.2@sha256:e1bcd6f85781f4a875abefb11c4166c1d79e4237c23de597bf0df81fec225b40"
+    ## @param image.pullPolicy MariaDB image pull policy
+    imagePullPolicy: Always
+
+  # -- Override of the full name of the MariaDB Database deployment.
   #    Impacts the name of the services REDCap will use to connect to the Database.
-  # @section -- REDCap MySQL Database settings
-  fullnameOverride: "redcap-mysql"
-  # -- If set to `true`, enables the deployment of MySQL as REDCap's database.
-  # @section -- REDCap MySQL Database settings
+  # @section -- REDCap MariaDB Database settings
+  fullnameOverride: "redcap-mariadb"
+  # -- If set to `true`, enables the deployment of MariaDB as REDCap's database.
+  # @section -- REDCap MariaDB Database settings
   enabled: true
-  # -- Deployment type for the database, standalone or replicated.
-  # @section -- REDCap MySQL Database settings
-  architecture: "standalone"
-  # -- Name of a configmap holding an SQL script to initialize the database with.
-  # @section -- REDCap MySQL Database settings
-  initdbScriptsConfigMap: ""
   networkPolicy:
     # -- Enable creation of NetworkPolicy resources
-    # @section -- REDCap MySQL Database settings
+    # @section -- REDCap MariaDB Database settings
     enabled: true
 
   auth:
+    # -- Enbled authentification system in mariadb.
+    # @section -- REDCap MariaDB Database settings
+    enabled: true
     # -- Automatically create a database at the first run.
-    # @section -- REDCap MySQL Database settings
+    # @section -- REDCap MariaDB Database settings
     createDatabase: true
-    # -- Name of the database automatically created at the first run, if `mysql.auth.createDatabase` has been set to `true`
-    # @section -- REDCap MySQL Database settings
+    # -- Name of the database automatically created at the first run, if `MariaDB.auth.createDatabase` has been set to `true`
+    # @section -- REDCap MariaDB Database settings
     database: "redcap"
-    # -- Name of the database user automatically created at the first run, if `mysql.auth.createDatabase` has been set to `true`
-    # @section -- REDCap MySQL Database settings
+    # -- Name of the database user automatically created at the first run, if `MariaDB.auth.createDatabase` has been set to `true`
+    # @section -- REDCap MariaDB Database settings
     username: "redcap"
-    # -- Name of the database user automatically created at the first run, if `mysql.auth.createDatabase` has been set to `true`
+    # -- Name of the database user automatically created at the first run, if `MariaDB.auth.createDatabase` has been set to `true`
     #    Not secure in production, use secret reference instead!
-    # @section -- REDCap MySQL Database settings
+    # @section -- REDCap MariaDB Database settings
     password: "Redcap*!"
 
+  config:
+    # -- Name of existing ConfigMap with MariaDB Primary configuration.
+    # @section -- REDCap MariaDB Database settings
+    existingConfigMap: "redcap-database-config"
 
-  primary:
-    # -- Name of existing ConfigMap with MySQL Primary configuration.
-    # @section -- REDCap MySQL Database settings
-    existingConfigmap: "redcap-database-config"
-    podLabels:
-      # -- Role to set for the networkPolicies. Not to be changed, unless you know exactly what you are doing!
-      # @section -- REDCap MySQL Database settings
-      app.kubernetes.io/role: redcap-mysql
+  
+  podLabels:
+    # -- Role to set for the networkPolicies. Not to be changed, unless you know exactly what you are doing!
+    # @section -- REDCap MariaDB Database settings
+    app.kubernetes.io/role: redcap-mariadb
 
-    service:
-      port:
-        # -- Port exposed by the MySQL service.
-        # @section -- REDCap MySQL Database settings
-        mysql: 3306
+  service:
+    # -- Port exposed by the MariaDB service.
+    # @section -- REDCap MariaDB Database settings
+    port: 3306
 
-    persistence:
-      # -- StorageClass used for database persistence.
-      # @section -- REDCap MySQL Database settings
-      storageClass: "standard"
-      # -- AccessMode used for database persistence.
-      # @section -- REDCap MySQL Database settings
-      accessModes:
-      - "ReadWriteOnce"
-      # -- Size of the storage used for database persistence.
-      # @section -- REDCap MySQL Database settings
-      size: "10G"
+  persistence:
+    # -- StorageClass used for database persistence.
+    # @section -- REDCap MariaDB Database settings
+    storageClass: "standard"
+    # -- AccessMode used for database persistence.
+    # @section -- REDCap MariaDB Database settings
+    accessModes:
+    - "ReadWriteOnce"
+    # -- Size of the storage used for database persistence.
+    # @section -- REDCap MariaDB Database settings
+    size: "10G"
 
 # REDCap Backup Job's settings
 # @section -- REDCap Backup Job's settings
@@ -357,24 +369,27 @@ backupJob:
 
   database:
     image:
-      # -- Image repository for the REDCap database backup container.
-      # @section -- REDCap Backup Job's settings
-      repository: "bitnami/mysql"
-      # -- Image tag for the REDCap database backup container.
-      # @section -- REDCap Backup Job's settings
-      tag: "9.3.0-debian-12-r1"
-      # -- Image pullPolicy for the REDCap database backup container.
-      # @section -- REDCap Backup Job's settings
-      pullPolicy: "Always"
+      # -- Image repository for MariaDB image.
+      # @section -- REDCap MariaDB Database settings
+      ## @param image.registry MariaDB image registry
+      registry: docker.io
+      ## @param image.repository MariaDB image repository
+      repository: mariadb
+      # -- Image tag for MariaDB image.
+      # @section -- REDCap MariaDB Database settings
+      ## @param image.tag MariaDB image tag (immutable tags are recommended)
+      tag: "12.1.2@sha256:e1bcd6f85781f4a875abefb11c4166c1d79e4237c23de597bf0df81fec225b40"
+      ## @param image.pullPolicy MariaDB image pull policy
+      imagePullPolicy: Always
 
   uploader:
     image:
       # -- Image repository for the REDCap backup uploader container.
       # @section -- REDCap Backup Job's settings
-      repository: "bitnami/rclone"
+      repository: "rclone/rclone"
       # -- Image tag for the REDCap backup uploader container.
       # @section -- REDCap Backup Job's settings
-      tag: "1.69.3"
+      tag: "drime"
       # -- Image pullPolicy for the REDCap backup uploader container.
       # @section -- REDCap Backup Job's settings
       pullPolicy: "Always"
@@ -426,38 +441,15 @@ restoreJob:
   # -- Name of the backup archive to restore.
   # @section -- REDCap Restore Job's settings
   archiveName: "redcap-backup.tar.gz"
-  redcap:
-    image:
-      # -- Image repository for the REDCap application restore container.
-      # @section -- REDCap Restore Job's settings
-      repository: "busybox"
-      # -- Image tag for the REDCap application restore container.
-      # @section -- REDCap Restore Job's settings
-      tag: "1"
-      # -- Image pullPolicy for the REDCap application restore container.
-      # @section -- REDCap Restore Job's settings
-      pullPolicy: "Always"
-
-  database:
-    image:
-      # -- Image repository for the REDCap database restore container.
-      # @section -- REDCap Restore Job's settings
-      repository: "bitnami/mysql"
-      # -- Image yag for the REDCap application restore container.
-      # @section -- REDCap Restore Job's settings
-      tag: "9.3.0-debian-12-r1"
-      # -- Image pullPolicy for the REDCap application restore container.
-      # @section -- REDCap Restore Job's settings
-      pullPolicy: "Always"
 
   downloader:
     image:
       # -- Image repository for the REDCap downloader container.
       # @section -- REDCap Restore Job's settings
-      repository: "bitnami/rclone"
+      repository: "rclone/rclone"
       # -- Image tag for the REDCap downloader container.
       # @section -- REDCap Restore Job's settings
-      tag: "1.69.3"
+      tag: "drime"
       # -- Image pullPolicy for the REDCap downloader container.
       # @section -- REDCap Restore Job's settings
       pullPolicy: "Always"
@@ -489,6 +481,45 @@ restoreJob:
           # @section -- REDCap Restore Job's settings
           existingSecret: ""
 
+  files:
+    image:
+      # -- Image repository for the REDCap application restore container.
+      # @section -- REDCap Restore Job's settings
+      repository: "busybox"
+      # -- Image tag for the REDCap files application container.
+      # @section -- REDCap Restore Job's settings
+      tag: "1"
+      # -- Image pullPolicy for the REDCap application restore container.
+      # @section -- REDCap Restore Job's settings
+      pullPolicy: "Always"
+
+  database:
+    image:
+      # -- Image repository for MariaDB image.
+      # @section -- REDCap MariaDB Database settings
+      ## @param image.registry MariaDB image registry
+      registry: docker.io
+      ## @param image.repository MariaDB image repository
+      repository: mariadb
+      # -- Image tag for MariaDB image.
+      # @section -- REDCap MariaDB Database settings
+      ## @param image.tag MariaDB image tag (immutable tags are recommended)
+      tag: "12.1.2@sha256:e1bcd6f85781f4a875abefb11c4166c1d79e4237c23de597bf0df81fec225b40"
+      ## @param image.pullPolicy MariaDB image pull policy
+      imagePullPolicy: Always
+
+  redcap:
+    image:
+      # -- Image repository for the REDCap application restore container.
+      # @section -- REDCap Restore Job's settings
+      repository: "alpine/curl"
+      # -- Image tag for the REDCap application restore container.
+      # @section -- REDCap Restore Job's settings
+      tag: "8.12.1"
+      # -- Image pullPolicy for the REDCap application restore container.
+      # @section -- REDCap Restore Job's settings
+      pullPolicy: "Always"
+
   # -- Resources for backup job's pod.
   # @section -- REDCap Restore Job's settings
   resources: {}
@@ -503,13 +534,30 @@ audit:
   # @section -- REDCap Audit Log Shipper settings
   enabled: false
 
+
+
+  global:
+    security:
+      # -- Set to true to enable bitnami charts to use insecure images like bitmani legacy images.
+      # @section -- REDCap Audit Log Shipper settings
+      allowInsecureImages: true
+  
+
+  image:
+    # -- Image repository for Logstash.
+    # @section -- REDCap Audit Log Shipper settings
+    repository: bitnamilegacy/logstash
+    # -- Image tag for Logstash.
+    # @section -- REDCap Audit Log Shipper settings
+    tag: 9.1.2-debian-12-r0
+
   podLabels:
     # -- Role to set for the networkPolicies. Not to be changed, unless you know exactly what you are doing!
     # @section -- REDCap Audit Log Shipper settings
     app.kubernetes.io/role: "redcap-audit"
 
   initContainers:
-  # -- Init container in charge of downloading the JDBC driver needed to connect to the MySQL database.
+  # -- Init container in charge of downloading the JDBC driver needed to connect to the MariaDB database.
   # @default -- A simple container to download the jar JDBC driver on a volume shared with Logstash.
   # @section -- REDCap Audit Log Shipper settings
   - name: "init-driver-download"
@@ -527,7 +575,7 @@ audit:
     - name: "JDBC_DRIVER_URL"
       # -- URL of the JDBC driver to download.
       # @section -- REDCap Audit Log Shipper settings
-      value: "https://downloads.mysql.com/archives/get/p/3/file/mysql-connector-j-8.4.0.tar.gz"
+      value: "https://downloads.MariaDB.com/archives/get/p/3/file/MariaDB-connector-j-8.4.0.tar.gz"
 
     # -- Command to be run to download and extract the JDBC driver.
     # @default -- Using `wget` do download the driver, and moving it to the shared persistent volume.
@@ -536,11 +584,11 @@ audit:
     - "sh"
     - "-c"
     - "cd driver/ && \
-      wget -O - ${JDBC_DRIVER_URL} | tar xzvf - mysql-connector-j-8.4.0/mysql-connector-j-8.4.0.jar && \
-      mv mysql-connector-j-8.4.0/mysql-connector-j-8.4.0.jar . && \
-      chown 1001:1001 mysql-connector-j-8.4.0.jar && \
-      chmod 755 mysql-connector-j-8.4.0.jar && \
-      rm -rf mysql-connector-j-8.4.0/"
+      wget -O - ${JDBC_DRIVER_URL} | tar xzvf - MariaDB-connector-j-8.4.0/MariaDB-connector-j-8.4.0.jar && \
+      mv MariaDB-connector-j-8.4.0/MariaDB-connector-j-8.4.0.jar . && \
+      chown 1001:1001 MariaDB-connector-j-8.4.0.jar && \
+      chmod 755 MariaDB-connector-j-8.4.0.jar && \
+      rm -rf MariaDB-connector-j-8.4.0/"
 
     securityContext:
       runAsUser: 1001
@@ -562,12 +610,12 @@ audit:
   enableMultiplePipelines: true
   # -- Name of an existing ConfigMap holding the pipeline(s)'s configuration.
   # @section -- REDCap Audit Log Shipper settings
-  existingConfiguration: "redcap-mysql-audit-logstash-pipeline"
+  existingConfiguration: "redcap-mariadb-audit-logstash-pipeline"
   extraEnvVars:
-  # -- Extra environment variables related to REDCap MySQL DB's password.
+  # -- Extra environment variables related to REDCap MariaDB DB's password.
   # @section -- REDCap Audit Log Shipper settings
   # @default -- Empty external secret reference to REDCap DB password
-  - name: "MYSQL_PASSWD"
+  - name: "MariaDB_PASSWD"
     valueFrom:
       secretKeyRef:
         name: ""
@@ -621,7 +669,7 @@ audit:
   # @default -- Mounted on `/var/run/secret/api-ca.pem`
   - name: "api-ca"
     mountPath: /var/run/secret/api-ca.pem
-    subpath: ""
+    subPath: ""
 
   # Configuration of the endpoint of the audit stack the logs are send to.
   logsApi:

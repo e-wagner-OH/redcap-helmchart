@@ -6,7 +6,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-    {{- range $labelKey, $labelValue := .Values.mysql.primary.podLabels }}
+    {{- range $labelKey, $labelValue := .Values.mariadb.podLabels }}
       {{ $labelKey | nindent 6 }}: {{ $labelValue }}
     {{- end }}
   policyTypes:
@@ -39,5 +39,5 @@ spec:
 
       ports:
         - protocol: TCP
-          port: {{ default 3306 .Values.mysql.primary.service.ports.mysql }}
+          port: {{ default 3306 .Values.mariadb.service.port }}
 {{- end }}

@@ -1,9 +1,9 @@
 dependencies:
-- name: mysql 
-  repository: https://charts.bitnami.com/bitnami
-  version: 13.0.2
+- name: mariadb
+  repository: oci://registry-1.docker.io/cloudpirates
+  version: 0.8.0
 - name: logstash
   repository: https://charts.bitnami.com/bitnami
   version: 7.0.4
-digest: sha256:9acead3f00befe50145d27d120a6795203cc65d72bc6578d1903642884fe1a48
-generated: "2025-06-19T15:34:43.900600074+02:00"
+digest: sha256:f08d201367526ff2189bcba7f2fa3ec712a842dabbd716490414560faeb7b935
+generated: "2025-12-08T16:16:04.913596174+01:00"

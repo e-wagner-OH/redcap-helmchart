@@ -3,7 +3,7 @@
 # Name: backup-upload.sh
 # Version: 1.0
 # Author: Kévin ZGRZENDEK for APHP EDS
-# Description : Compresses and uploads REDCap backup dir (containing the redcap app dir, the edocs dir & MySQL db dump)
+# Description : Compresses and uploads REDCap backup dir (containing the redcap app dir, the edocs dir & MariaDB dump)
 
 echo "[INFO] Starting REDCap backup script v1.0"
 

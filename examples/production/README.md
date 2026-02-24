@@ -32,7 +32,7 @@ kubectl -n redcap create secret generic redcap-prod-database-salt --from-literal
 ```
 - Database credentials : 
 ```sh
-kubectl -n redcap create secret generic redcap-prod-mysql-passwd --from-literal mysql-password='generated-mysql-password'
+kubectl -n redcap create secret generic redcap-prod-mariadb-passwd --from-literal mariadb-password='generated-mariadb-password'
 ```
 - Email server password: 
 ```sh

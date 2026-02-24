@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-mail-conf
 data: 
-{{ tpl (.Files.Glob "configuration/redcap/mail-conf/*").AsConfig . | nindent 2 }}
+{{ tpl (.Files.Glob "configuration/redcap/mail-conf/creds/*").AsConfig . | nindent 2 }}

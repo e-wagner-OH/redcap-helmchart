@@ -3,7 +3,7 @@
 [![redcap-helmchart-ci](https://github.com/aphp/redcap-helmchart/actions/workflows/chart-ci.yaml/badge.svg)](https://github.com/aphp/redcap-helmchart/actions/workflows/chart-ci.yaml)
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/aphp-redcap)](https://artifacthub.io/packages/search?repo=aphp-redcap)
 
-## Presentation
+## Presentation 
 
 This repository hosts the REDCap Helm Chart developed by the Greater Paris University Hospitals (`APHP` in French - Assistance Publique des Hôpitaux de Paris). This Chart allows for a cloud-native and cloud-agnostic deployment of REDCap, a secure web application for building and managing online surveys and databases.
 
@@ -21,7 +21,7 @@ The architecture of the REDCap stack deployed by this Chart is as follows :
 A minimal setup of this stack includes : 
 - The HTTPd component
 - The PHP FPM Server hosting the REDCap Application
-- The MySQL Database used by REDCap
+- The MariaDB Database used by REDCap
 
 On top of that, you can also choose to deploy : 
 - A Backup Cronjob, that can generate an archive containing a database dump, a dump of the `edocs` folder, and a dump of the folder containing the REDCap Application.
@@ -45,7 +45,7 @@ Here are a few important notions to keep in mind to efficiently manage a REDCap 
 
 If you choose to automatically install REDCap using your community credentials with this chart, an Kubernetes Job called `init-job` will be automatically fired during the chart's installation process:
 - The `StartupPrope` will call the `install.php` or `upgrade.php` script (depending if you're installing REDCap from scratch or upgrading from an existing installation)  with the query parameter `auto=1`
-- The `ReadinessProbe` will call a MySql script allowing to configure REDCap with the following parameter, extracted from the Chart values :
+- The `ReadinessProbe` will call a MariaDB script allowing to configure REDCap with the following parameter, extracted from the Chart values :
   - REDCap Base URL
   - Institution Name
   - Organization Name
