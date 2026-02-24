@@ -1,7 +1,7 @@
 apiVersion: v2
 name: redcap
-version: 1.4.6
-appVersion: 14.5.25
+version: 1.5.0
+appVersion: 15.0.27
 kubeVersion: '>= 1.24.0-0'
 description: A Helm chart to deploy REDCap on a Kubernetes cluster.
 type: application

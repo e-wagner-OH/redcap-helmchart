@@ -1,4 +1,13 @@
 You can access REDCap homepage URL by running these commands:
+
+{{- if .Values.mariadb.enabled }}
+# MariaDB is enabled
+The chart has been deployed with MariaDB. Please ensure that any configurations specific to MySQL are updated for MariaDB.
+{{- else }}
+# MySQL is enabled
+The chart is using MySQL as the database. If you wish to migrate to MariaDB, please disable MySQL and enable MariaDB in your `values.yaml` file.
+{{- end }}
+
 {{- if .Values.ingress.enabled }}
 {{- range $host := .Values.ingress.hosts }}
   {{- range .paths }}
